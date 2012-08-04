@@ -34,14 +34,14 @@ Each 96bit (3 dwords) CF instruction consists of two CF clauses.  The instructio
   <tr><td rowspan=3>dword0</td>
       <td> 0..11</td><td>addr/size 1</td></tr>
   <tr><td>12..15</td><td>count 1</td></tr>
-  <tr><td>16..31</td><td>sequence 1.. 2 bits per instruction in the `EXEC` clause, the low bit seems to control `FETCH` vs `ALU` instruction type, the high bit seems to be (S) modifier on instruction (which might make the name `SERIALIZE()` in optimize-for-adreno.pdf screenshot make sense.. although I don't quite understand the meaning yet)</td></tr>
+  <tr><td>16..31</td><td>sequence 1 - 2 bits per instruction in the <code>EXEC</code> clause, the low bit seems to control <code>FETCH</code> vs <code>ALU</code> instruction type, the high bit seems to be <code>(S)</code> modifier on instruction (which might make the name <code>SERIALIZE()</code> in optimize-for-adreno.pdf screenshot make sense.. although I don't quite understand the meaning yet)</td></tr>
   <tr><td rowspan=4>dword1</td>
       <td> 0..7 </td><td>UNKNOWN</td></tr>
   <tr><td>8..15?</td><td>CF opcode 1</td></tr>
   <tr><td>16..27</td><td>addr/size 2</td></tr>
   <tr><td>28..31</td><td>count 2</td></tr>
   <tr><td rowspan=3>dword2</td>
-      <td> 0..15</td><td>sequence 2</td></tr>
+      <td> 0..15</td><td>sequence 2 - same as sequence 1 but for the 2nd CF clause</td></tr>
   <tr><td>16..23</td><td>UNKNOWN</td></tr>
   <tr><td>24..31</td><td>CF opcode 2</td></tr>
 </table>
