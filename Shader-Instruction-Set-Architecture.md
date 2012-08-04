@@ -4,7 +4,7 @@ The adreno GPU has a unified shader architecture, so the same instruction set an
 It bears some resemblances to the [r600](http://www.x.org/docs/AMD/r600isa.pdf) ISA, in that it is a VLIW architecture, with separation of control flow (CF) program and arithmetic and logic (ALU) / FETCH instructions.  But while the r600 ALU instructions consist of up to 5 scalar operations, the adreno ALU instruction consists of one vec4 operation and/or one scalar operation.
 
 ## Assembler syntax
-The assembler syntax is loosely based on the r600 [assembler syntax](http://www.x.org/docs/AMD/R600-R700-Evergreen_Assembly_Language_Format.pdf), and also a single screenshot in [optimize-adreno.pdf](https://developer.qualcomm.com/download/optimize-adreno.pdf) (pg 6).  As with the r600 assembler syntax, the CF and ALU/FETCH instructions are interleaved for easier reading:
+The assembler syntax is loosely based on the [r600 assembler syntax](http://www.x.org/docs/AMD/R600-R700-Evergreen_Assembly_Language_Format.pdf), and also a single screenshot in [optimize-adreno.pdf](https://developer.qualcomm.com/download/optimize-adreno.pdf) (pg 6).  As with the r600 assembler syntax, the CF and ALU/FETCH instructions are interleaved for easier reading:
 ```
 EXEC ADDR(0x3) CNT(0x1)
    (S)FETCH:	VERTEX	R1.xyz1 = R0.x FMT_32_32_32_FLOAT UNSIGNED STRIDE(12) CONST(10)
@@ -48,6 +48,44 @@ Each 96bit (3 dwords) CF instruction consists of two CF clauses.  The instructio
 
 ## ALU instructions
 Each 96 bit ALU instruction can execute one vec4 operation, and/or one scalar operation.  Some instructions are only available as scalar or vector instructions.
+
+<table>
+  <tr><th>dword</th><th>bit position</th><th>description</th></tr>
+  <tr><td rowspan=9>dword0</td>
+      <td> 0..5? </td><td>vector dest register</td></tr>
+  <tr><td>6?..7  </td><td>UNKNOWN</td></tr>
+  <tr><td>8..13? </td><td>scalar dest register</td></tr>
+  <tr><td> 14    </td><td>UNKNOWN</td></tr>
+  <tr><td> 15    </td><td>export flag</td></tr>
+  <tr><td>16..19 </td><td>vector dest write mask (wxyz, 1 bit per channel)</td></tr>
+  <tr><td>20..23 </td><td>scalar dest write mask (same as above)</td></tr>
+  <tr><td>24..26 </td><td>UNKNOWN</td></tr>
+  <tr><td>27..31 </td><td>scalar operation</td></tr>
+  <tr><td rowspan=9>dword1</td>
+      <td> 0..7  </td><td>src3 swizzle</td></tr>
+  <tr><td> 8..15 </td><td>src2 swizzle</td></tr>
+  <tr><td>16..23 </td><td>src1 swizzle</td></tr>
+  <tr><td>  24   </td><td>src3 negate</td></tr>
+  <tr><td>  25   </td><td>src2 negate</td></tr>
+  <tr><td>  26   </td><td>src1 negate</td></tr>
+  <tr><td>  27   </td><td>predicate case (1 - execute if true, 0 - execute if false)</td></tr>
+  <tr><td>  28   </td><td>predicate (conditional execution)</td></tr>
+  <tr><td>29..31 </td><td>UNKNOWN</td></tr>
+  <tr><td rowspan=13>dword2</td>
+      <td> 0..5? </td><td>src3 register</td></tr>
+  <tr><td>  6    </td><td>UNKNOWN</td></tr>
+  <tr><td>  7    </td><td>src3 abs (assumed)</td></tr>
+  <tr><td> 8..13?</td><td>src2 register</td></tr>
+  <tr><td>  14   </td><td>UNKNOWN</td></tr>
+  <tr><td>  15   </td><td>src2 abs</td></tr>
+  <tr><td>16..21?</td><td>src1 register</td></tr>
+  <tr><td>  22   </td><td>UNKNOWN</td></tr>
+  <tr><td>  23   </td><td>src1 abs</td></tr>
+  <tr><td>24..28 </td><td>vector operation</td></tr>
+  <tr><td>  29   </td><td>src3 type/bank (1 - Register bank (R), varyings and locals; 0 - Constant bank (C), uniforms and consts</td></tr>
+  <tr><td>  30   </td><td>vector src2 type/bank (same as above)</td></tr>
+  <tr><td>  31   </td><td>vector src1 type/bank (same as above)</td></tr>
+</table>
 
 ...
 
