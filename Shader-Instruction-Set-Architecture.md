@@ -27,5 +27,23 @@ EXEC_END ADDR(0x5) CNT(0x0)
 The `ADDR` and `CNT` fields for `EXEC` and `EXEC_END` CF clauses refer to the offset (in multiples of 96bits) and instruction counts of the corresponding ALU instructions.
 
 ## CF instructions
+Each 96bit (3 dwords) CF instruction consists of two CF clauses.  The instruction format is:
+
+<table>
+  <tr><th>dword</th><th>bit position</th><th>description</th></tr>
+  <tr><td rowspan=3>dword0</td>
+      <td> 0..11</td><td>addr/size 1</td></tr>
+  <tr><td>12..15</td><td>count 1</td></tr>
+  <tr><td>16..31</td><td>sequence 1.. 2 bits per instruction in the `EXEC` clause, the low bit seems to control `FETCH` vs `ALU` instruction type, the high bit seems to be (S) modifier on instruction (which might make the name `SERIALIZE()` in optimize-for-adreno.pdf screenshot make sense.. although I don't quite understand the meaning yet)</td></tr>
+  <tr><td rowspan=4>dword1</td>
+      <td> 0..7 </td><td>UNKNOWN</td></tr>
+  <tr><td>8..15?</td><td>CF opcode 1</td></tr>
+  <tr><td>16..27</td><td>addr/size 2</td></tr>
+  <tr><td>28..31</td><td>count 2</td></tr>
+  <tr><td rowspan=3>dword2</td>
+      <td> 0..15</td><td>sequence 2</td></tr>
+  <tr><td>16..23</td><td>UNKNOWN</td></tr>
+  <tr><td>24..31</td><td>CF opcode 2</td></tr>
+</table>
 
 ## ALU instructions
