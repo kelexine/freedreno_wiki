@@ -3,6 +3,8 @@ The adreno GPU has a unified shader architecture, so the same instruction set an
 
 It bears some resemblances to the [r600](http://www.x.org/docs/AMD/r600isa.pdf) ISA, in that it is a VLIW architecture, with separation of control flow (CF) program, which controls the execution flow, and arithmetic and logic (ALU) / FETCH instructions.  But while the r600 ALU instructions consist of up to 5 scalar operations, the adreno ALU instruction consists of one vec4 operation and/or one scalar operation.
 
+The adreno shader consists of 96bit (3 dwords) CF, ALU, and FETCH instructions.
+
 ## Assembler syntax
 The assembler syntax is loosely based on the [r600 assembler syntax](http://www.x.org/docs/AMD/R600-R700-Evergreen_Assembly_Language_Format.pdf), and also a single screenshot in [optimize-adreno.pdf](https://developer.qualcomm.com/download/optimize-adreno.pdf) (pg 6).  As with the r600 assembler syntax, the CF and ALU/FETCH instructions are interleaved for easier reading:
 ```
@@ -114,30 +116,46 @@ Each ALU instruction can have up to 3 src registers.  The 3rd src register is ei
 Interpretation of ALU src swizzle fields
 
 <table>
-  <tr><td>1..0</td><td colspan=2>chan[0] (x) swizzle</td></tr>
-  <tr><td></td><td>00</td><td>x</td></tr>
-  <tr><td></td><td>01</td><td>y</td></tr>
-  <tr><td></td><td>10</td><td>z</td></tr>
-  <tr><td></td><td>11</td><td>w</td></tr>
-  <tr><td>3..2</td><td colspan=2>chan[1] (y) swizzle</td></tr>
-  <tr><td></td><td>11</td><td>x</td></tr>
-  <tr><td></td><td>00</td><td>y</td></tr>
-  <tr><td></td><td>01</td><td>z</td></tr>
-  <tr><td></td><td>10</td><td>w</td></tr>
-  <tr><td>5..4</td><td colspan=2>chan[2] (z) swizzle</td></tr>
-  <tr><td></td><td>10</td><td>x</td></tr>
-  <tr><td></td><td>11</td><td>y</td></tr>
-  <tr><td></td><td>00</td><td>z</td></tr>
-  <tr><td></td><td>01</td><td>w</td></tr>
-  <tr><td>7..6</td><td colspan=2>chan[3] (w) swizzle</td></tr>
-  <tr><td></td><td>01</td><td>x</td></tr>
-  <tr><td></td><td>10</td><td>y</td></tr>
-  <tr><td></td><td>11</td><td>z</td></tr>
-  <tr><td></td><td>00</td><td>w</td></tr>
+  <tr><td>1..0</td><td colspan=2>chan[0] (x) swizzle</td><td>3..2</td><td colspan=2>chan[1] (y) swizzle</td></tr>
+  <tr><td></td><td>00</td><td>x</td>                     <td></td><td>11</td><td>x</td></tr>
+  <tr><td></td><td>01</td><td>y</td>                     <td></td><td>00</td><td>y</td></tr>
+  <tr><td></td><td>10</td><td>z</td>                     <td></td><td>01</td><td>z</td></tr>
+  <tr><td></td><td>11</td><td>w</td>                     <td></td><td>10</td><td>w</td></tr>
+  <tr><td>5..4</td><td colspan=2>chan[2] (z) swizzle</td><td>7..6</td><td colspan=2>chan[3] (w) swizzle</td></tr>
+  <tr><td></td><td>10</td><td>x</td>                     <td></td><td>01</td><td>x</td></tr>
+  <tr><td></td><td>11</td><td>y</td>                     <td></td><td>10</td><td>y</td></tr>
+  <tr><td></td><td>00</td><td>z</td>                     <td></td><td>11</td><td>z</td></tr>
+  <tr><td></td><td>01</td><td>w</td>                     <td></td><td>00</td><td>w</td></tr>
 </table>
 
-...
+The known vec4 instruction opcodes:
 
+<table>
+  <tr><th>opcode name</th><th>opcode #</th><th>description</th></tr>
+  <tr><td>ADDv   </td><td>0 </td><td>Rdstv = Rsrc1 + Rsrc2</td></tr>
+  <tr><td>MULv   </td><td>1 </td><td>Rdstv = Rsrc1 * Rsrc2</td></tr>
+  <tr><td>MAXv   </td><td>2 </td><td>Rdstv = max(Rsrc1, Rsrc2)  (also used as a MOV instruction)</td></tr>
+  <tr><td>MINv   </td><td>3 </td><td>Rdstv = min(Rsrc1, Rsrc2)</td></tr>
+  <tr><td>FLOORv </td><td>10</td><td>Rdstv = floor(Rsrc1)</td></tr>
+  <tr><td>MULADDv</td><td>11</td><td>Rdstv = Rsrc3 + (Rsrc1 * Rsrc2)</td></tr>
+  <tr><td>DOT4v  </td><td>15</td><td>dot product of all 4 channels of Rsrc1, Rsrc2</td></tr>
+  <tr><td>DOT3v  </td><td>16</td><td>dot product of first 3 channels of Rsrc1, Rsrc2</td></tr>
+</table>
+
+The known scalar instruction opcodes:
+
+<table>
+  <tr><th>opcode name</th><th>opcode #</th><th>description</th></tr>
+  <tr><td>MOV  </td><td>2 </td><td>Rdsts = Rsrc3</td></tr>
+  <tr><td>EXP2 </td><td>7 </td><td>Rdsts = exp(Rsrc3)</td></tr>
+  <tr><td>LOG2 </td><td>8 </td><td>Rdsts = log2(Rsrc3)</td></tr>
+  <tr><td>RCP  </td><td>9 </td><td>Rdsts = 1 / Rsrc3</td></tr>
+  <tr><td>RSQ  </td><td>11</td><td>Rdsts = 1 / sqrt(Rsrc3)</td></tr>
+  <tr><td>PSETE</td><td>13</td><td>predicate = Rsrc3 == 0 (called PRED_SETE in r600isa.pdf)</td></tr>
+  <tr><td>SQRT </td><td>20</td><td>Rdsts = sqrt(Rsrc3)</td></tr>
+  <tr><td>MUL  </td><td>21</td><td>Rdsts = Rsrc3 * ??</td></tr>
+  <tr><td>ADD  </td><td>22</td><td>Rdsts = Rsrc3 + ??</td></tr>
+</table>
 
 ## FETCH instructions
 The FETCH instruction is also 96 bit, but can fetch one vec4 vertex value or one vec4 texture sample value.
