@@ -49,6 +49,15 @@ Each 96bit (3 dwords) CF instruction consists of two CF clauses.  The instructio
 ## ALU instructions
 Each 96 bit ALU instruction can execute one vec4 operation, and/or one scalar operation.  Some instructions are only available as scalar or vector instructions.
 
+An example of a combined vec4+scalar instruction in assembler syntax:
+```
+ALU:	MULv	R2.xyz_ = R3.zzzw, C10
+  	RCP	R4.x___ = R0
+```
+To perform only a scalar operation, the vector operation should mask each channel in the vector dest (ie. `R0.____`)
+
+Each ALU instruction can have up to 3 src registers.  The 3rd src register is either used for a 3 op vector instruction like `MULADDv` or for the paired scalar instruction.
+
 <table>
   <tr><th>dword</th><th>bit position</th><th>description</th></tr>
   <tr><td rowspan=9>dword0</td>
@@ -95,3 +104,77 @@ The FETCH instruction is also 96 bit, but can fetch one vec4 vertex value or one
 
 ...
 
+## Example
+Here is a more complete example.
+
+GLSL format:
+```c
+uniform mat4 modelviewMatrix;
+uniform mat4 modelviewprojectionMatrix;
+uniform mat3 normalMatrix;
+
+attribute vec4 in_position;
+attribute vec3 in_normal;
+attribute vec4 in_color;
+
+vec4 lightSource = vec4(2.0, 2.0, 20.0, 0.0);
+
+varying vec4 vVaryingColor;
+
+void main()
+{
+    gl_Position = modelviewprojectionMatrix * in_position;
+    vec3 vEyeNormal = normalMatrix * in_normal;
+    vec4 vPosition4 = modelviewMatrix * in_position;
+    vec3 vPosition3 = vPosition4.xyz / vPosition4.w;
+    vec3 vLightDir = normalize(lightSource.xyz - vPosition3);
+    float diff = max(0.0, dot(vEyeNormal, vLightDir));
+    vVaryingColor = vec4(diff * in_color.rgb, 1.0);
+}
+```
+and commented shader assembly:
+```
+ ;;;; const/register assignment:
+ ; R0: vVaryingColor
+ ; R1, CONST(1): in_color
+ ; R3, CONST(2): in_normal
+ ; R2, CONST(3): in_position
+ ; C0+: modelviewMatrix
+ ; C4+: modelviewprojectionMatrix
+ ; C8+: normalMatrix
+ ; C11: 2.000000, 2.000000, 20.000000, 0.000000
+ ; C12: 1.000000, 0.000000, 0.000000, 0.000000
+EXEC
+      FETCH:  VERTEX  R1.xyz_ = R0.z FMT_32_32_32_FLOAT SIGNED
+                                   STRIDE(12) CONST(4)
+      FETCH:  VERTEX  R2.xyz1 = R0.x FMT_32_32_32_FLOAT SIGNED
+                                   STRIDE(12) CONST(4)
+      FETCH:  VERTEX  R3.xyz_ = R0.y FMT_32_32_32_FLOAT SIGNED
+                                       STRIDE(12) CONST(4)
+   (S)ALU:    MULv    R0 = R2.wwww, C7           ; -> modelviewprojectionMatrix * in_position
+      ALU:    MULADDv R0 = R0, R2.zzzz, C6       ; -> modelviewprojectionMatrix * in_position
+      ALU:    MULADDv R0 = R0, R2.yyyy, C5       ; -> modelviewprojectionMatrix * in_position
+ALLOC COORD SIZE(0x0)
+EXEC
+      ALU:    MULADDv export62 = R0, R2.xxxx, C4 ; gl_Position = modelviewprojectionMatrix * in_position
+      ALU:    MULv    R0 = R2.wwww, C3           ; -> modelviewMatrix * in_position
+      ALU:    MULADDv R0 = R0, R2.zzzz, C2       ; -> modelviewMatrix * in_position
+      ALU:    MULADDv R0 = R0, R2.yyyy, C1       ; -> modelviewMatrix * in_position
+      ALU:    MULADDv R0 = R0, R2.xxxx, C0       ; vec4 vPosition4 = modelviewMatrix * in_position
+      ALU:    MULv    R2.xyz_ = R3.zzzw, C10     ; -> normalMatrix * in_normal
+              RCP     R4.x___ = R0               ; -> 1 / vPosition4.w
+EXEC
+      ALU:    MULADDv R0.xyz_ = C11.xxzw, -R0, R4.xxxw ; -> lightSource - (vPosition4.xyz / vPosition4.w
+      ALU:    DOT3v   R4.x___ = R0, R0                 ; -> normalize(...)
+      ALU:    MULADDv R2.xyz_ = R2, R3.yyyw, C9        ; -> normalMatrix * in_normal
+      ALU:    MULADDv R2.xyz_ = R2, R3.xxxw, C8        ; vec3 vEyeNormal = normalMatrix * in_normal
+ALLOC PARAM/PIXEL SIZE(0x0)
+EXEC_END
+      ALU:    MAXv    R0.____ = R0, R0
+              RSQ     R0.___w = R4.xyzx          ; -> normalize(...)  (1 / sqrt(dot(..))
+      ALU:    MULv    R0.xyz_ = R0, R0.wwww      ; -> vec3 vLightDir = normalize(lightSource.xyz - vPosition3)
+      ALU:    DOT3v   R0.x___ = R2, R0           ; -> dot(vEyeNormal, vLightDir)
+      ALU:    MAXv    R0.x___ = R0, C11.wyzw     ; float diff = max(0.0, dot(vEyeNormal, vLightDir))
+      ALU:    MULv    export0.xyz_ = R1, R0.xxxw ; vVaryingColor.xyz_= diff * in_color.rgb
+              MOV     export0.___w = C12.xyzx    ; vVaryingColor.___w  = 1.0
+```
