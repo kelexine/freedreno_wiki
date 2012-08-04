@@ -96,6 +96,31 @@ Each ALU instruction can have up to 3 src registers.  The 3rd src register is ei
   <tr><td>  31   </td><td>vector src1 type/bank (same as above)</td></tr>
 </table>
 
+Interpretation of ALU src swizzle fields
+
+<table>
+  <tr><td>1..0</td><td colspan=2>chan[0] (x) swizzle</td></tr>
+  <tr><td></td><td>00</td><td>x</td></tr>
+  <tr><td></td><td>01</td><td>y</td></tr>
+  <tr><td></td><td>10</td><td>z</td></tr>
+  <tr><td></td><td>11</td><td>w</td></tr>
+  <tr><td>3..2</td><td colspan=2>chan[1] (y) swizzle</td></tr>
+  <tr><td></td><td>11</td><td>x</td></tr>
+  <tr><td></td><td>00</td><td>y</td></tr>
+  <tr><td></td><td>01</td><td>z</td></tr>
+  <tr><td></td><td>10</td><td>w</td></tr>
+  <tr><td>5..4</td><td colspan=2>chan[2] (z) swizzle</td></tr>
+  <tr><td></td><td>10</td><td>x</td></tr>
+  <tr><td></td><td>11</td><td>y</td></tr>
+  <tr><td></td><td>00</td><td>z</td></tr>
+  <tr><td></td><td>01</td><td>w</td></tr>
+  <tr><td>7..6</td><td colspan=2>chan[3] (w) swizzle</td></tr>
+  <tr><td></td><td>01</td><td>x</td></tr>
+  <tr><td></td><td>10</td><td>y</td></tr>
+  <tr><td></td><td>11</td><td>z</td></tr>
+  <tr><td></td><td>00</td><td>w</td></tr>
+</table>
+
 ...
 
 
@@ -145,12 +170,9 @@ and commented shader assembly:
  ; C11: 2.000000, 2.000000, 20.000000, 0.000000
  ; C12: 1.000000, 0.000000, 0.000000, 0.000000
 EXEC
-      FETCH:  VERTEX  R1.xyz_ = R0.z FMT_32_32_32_FLOAT SIGNED
-                                   STRIDE(12) CONST(4)
-      FETCH:  VERTEX  R2.xyz1 = R0.x FMT_32_32_32_FLOAT SIGNED
-                                   STRIDE(12) CONST(4)
-      FETCH:  VERTEX  R3.xyz_ = R0.y FMT_32_32_32_FLOAT SIGNED
-                                       STRIDE(12) CONST(4)
+      FETCH:  VERTEX  R1.xyz_ = R0.z FMT_32_32_32_FLOAT SIGNED STRIDE(12) CONST(4)
+      FETCH:  VERTEX  R2.xyz1 = R0.x FMT_32_32_32_FLOAT SIGNED STRIDE(12) CONST(4)
+      FETCH:  VERTEX  R3.xyz_ = R0.y FMT_32_32_32_FLOAT SIGNED STRIDE(12) CONST(4)
    (S)ALU:    MULv    R0 = R2.wwww, C7           ; -> modelviewprojectionMatrix * in_position
       ALU:    MULADDv R0 = R0, R2.zzzz, C6       ; -> modelviewprojectionMatrix * in_position
       ALU:    MULADDv R0 = R0, R2.yyyy, C5       ; -> modelviewprojectionMatrix * in_position
