@@ -1,6 +1,10 @@
 # Overview
 The adreno GPU traces it's lineage back to ATI's [Imageon](http://en.wikipedia.org/wiki/Imageon) line of mobile GPUs intended for SoC application.  As such, it shares some similarities with the [Radeon](http://en.wikipedia.org/wiki/Radeon) GPUs.  In particular, the CP (command processor) appears to be identical.  However, none of the op-codes or register addresses appear to the same.
 
+Note that the basic packet format (described in this page) is same for a3xx and a2xx although all the registers and some of the packet types differ.
+
+The canonical register level reference is the [rnndb database](https://github.com/freedreno/envytools/tree/master/rnndb).  All known registers and bitfields for a2xx and a3xx (and display controller related blocks) are added there, and the register accessor headers used by kernel, gallium driver, etc, are generated from these xml files.  Various parsing tools (demsm for parsing kernel register access traces, and cffdump for parsing cmdstream traces) also use the rnndb database.
+
 ## Command Processor (CP)
 This is the easiest part, as it is identical to radeon.  The CP is the block that reads a series of rendering commands from a ringbuffer (the PM4 command stream) and either sets some register values or triggers some rendering action.  It consists primarily of Type-0 (PKT0) and Type-3 (PKT3) commands
 
@@ -33,4 +37,4 @@ A few common actions are:
 * `CP_INDIRECT_BUFFER:0x3f` - branch to a 2nd cmdstream buffer
 * `CP_DRAW_INDX:0x22` - trigger drawing
 
-Currently the best reference is [util/cffdump.c](https://github.com/freedreno/freedreno/blob/master/util/cffdump.c), the commandstream parser, and [fdre/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre/freedreno.c).  Also see the [renders](http://freedreno.github.com/renders/index.html) page which has example renders and corresponding cmdstream parses from fdre.
+Currently the best reference is [util/cffdump.c](https://github.com/freedreno/freedreno/blob/master/util/cffdump.c), the commandstream parser, and [fdre-a2xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a2xx/freedreno.c) or [fdre-a3xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a3xx/freedreno.c).  Also see the [renders](http://freedreno.github.com/renders/index.html) page which has example renders and corresponding cmdstream parses from fdre.
