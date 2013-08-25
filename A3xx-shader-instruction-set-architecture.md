@@ -117,6 +117,29 @@ mad.f32 r0.x, r2.w, r3.w, r0.x
 ```
 rather than needing two nop's for the result of the previous instruction to be available.  The compiler can of course schedule unrelated instructions in those `nop` slots if possible.
 
+## Branches / Flow Control
+Typically simple if/else constructs will be flattened out, with all legs of the branch executed, and then `sel` instructions used to conditionally write back the results from the leg of the branch that was "taken" from a flow control point of view.  Divergent flow control amonst threads is typically expensive (ie. hardware ends up having to execute one thread at a time within the thread-group), and so a compiler will normally try to avoid it.
+
+(Currently if/else is implemented with branches in gallium driver, simply because the compiler is not clever enough to figure out how to flatten it.)
+
+When branches are needed, they can be implemented with cat0 instructions, for example an if/else could naively be achieved by:
+```
+cmps.f.eq p0.x, hr1.x, hc2.x
+br p0.x, #6
+mov.f16f16 hr1.x, hc2.x
+mov.f16f16 hr1.y, hc2.y
+mov.f16f16 hr1.z, hc2.x
+mov.f16f16 hr1.w, hc2.y
+jump #6
+(jp)nop
+mov.f16f16 hr1.x, hc2.y
+mov.f16f16 hr1.y, hc2.x
+mov.f16f16 hr1.z, hc2.x
+mov.f16f16 hr1.w, hc2.y
+(jp)nop
+```
+Note that the branch target instructions have a `(jp)` (jump-target) flag set on them.  Presumably this helps the thread scheduler figure out the potential convergence points.  The jump target need not be a `nop`.  Branches can be forward (positive) or backwards (negative) immediate offset.
+
 ## Const register file and src register constraints
 There are limitations about use of const src arguments for instructions, and in some cases the compiler will need to move a const into a GPR.  Known limitations are:
 * cat2 can take at most one const src (but can be in either position)
