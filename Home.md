@@ -8,4 +8,7 @@
 
 ## Technical Information:
 * [[Useful Information|Useful-Information]]
-* [[Command Stream Format|Command-Stream-Format]] - the basic packet format (described in this page) is same for a3xx and a2xx although all the registers and some of the packet types differ.
+* [[Command Stream Format|Command-Stream-Format]]
+   * The basic packet format (described in this page) is same for a3xx and a2xx although all the registers and some of the packet types differ.
+* [[A2xx Shader Instruction Set Architecture|A2XX-Shader-Instruction-Set-Architecture]]
+* [[A3xx Shader Instruction Set Architecture|A3XX-Shader-Instruction-Set-Architecture]]
