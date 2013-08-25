@@ -1,4 +1,4 @@
-Note: some of the stuff on this page is a bit outdated.. check https://github.com/freedreno/freedreno/blob/master/fdre/asm/instr.h for the latest until I have time to update the wiki page.
+Note: some of the stuff on this page is a bit outdated.. check [instr-a2xx.h](https://github.com/freedreno/freedreno/blob/master/includes/instr-a2xx.h) for the latest until I have time to update the wiki page.
 
 # Instruction Set Architecture (ISA) Overview
 The adreno GPU has a unified shader architecture, so the same instruction set and shader resources are used by both vertex (VS) and fragment/pixel (PS) shaders.
