@@ -54,7 +54,9 @@ Other non-cat5 instructions which read from a register written by a cat5 instruc
 Load/Store instructions to private/local/global memory, atomic add/sub/exchange/etc, and other misc instructions.  Mostly useful for opencl.
 
 ## Assembly Syntax
-Registers are denoted in vec4 syntax, ie. `r1.y` refers to the y'th component of 2nd vec4 register.  But for the most part there are not any constraints about treating the registers as vec4.  You could just as easily think of `r1.y` as `r5` ((4 * 1) + 1).  Inputs and outputs to shaders do not need to be vec4 aligned, for example a varying output of a vertex shader can occupy `r2.w` through `r3.z`.  But assignment of registers to a shader thread happen on granularity of vec4.
+General purpose registers (GPRs) are denoted in vec4 syntax, ie. `r1.y` refers to the y'th component of 2nd vec4 register.  But for the most part there are not any constraints about treating the registers as vec4.  You could just as easily think of `r1.y` as `r5` ((4 * 1) + 1).  Inputs and outputs to shaders do not need to be vec4 aligned, for example a varying output of a vertex shader can occupy `r2.w` through `r3.z`.  But assignment of registers to a shader thread happen on granularity of vec4.
+
+A half-width register is denoted as `hr2.z`.  And similarly a full or half-width const file register (uniforms/immediates) is, for example, `c3.z` or `hc5.x`.
 
 An example fragment shader from the disassembler:
 ```
@@ -98,7 +100,55 @@ The `(rptN)` syntax sets the repeat field, in which case the instruction is exec
 * `p0` - predicate register, numerically 62
 
 ## Scheduling
+The compiler is responsible for taking into account the number of (instruction dispatch) cycles before a destination register of a previous instruction is ready.  For cat1-cat3 instructions, the destination register is available three instructions later.  The compiler is responsible for inserting `nop` instructions if needed.
+
+For a destination register written by a cat4 or cat5 instruction, the `(ss)` or `(sy)` bit can be set to synchronize.  This is because, unlike cat1-cat3, the number of cycles needed to complete is not predictable.
+
+In particular, for cat3 instructions, the 3rd src register is not needed until the 2nd cycle, so for example a DP4 (dot product) instruction can be implemented as:
+```
+; DP4 r0.x, r2.xyzw, r3.xyzw:
+mul.f r0.x, r2.x, r3.x
+nop
+mad.f32 r0.x, r2.y, r3.y, r0.x
+nop
+mad.f32 r0.x, r2.z, r3.z, r0.x
+nop
+mad.f32 r0.x, r2.w, r3.w, r0.x
+```
+rather than needing two nop's for the result of the previous instruction to be available.  The compiler can of course schedule unrelated instructions in those `nop` slots if possible.
 
 ## Const register file and src register constraints
+There are limitations about use of const src arguments for instructions, and in some cases the compiler will need to move a const into a GPR.  Known limitations are:
+* cat2 can take at most one const src (but can be in either position)
+* cat3 cannot take a const src as 2nd argument (src1)
+* cat4 cannot take a const src
 
 ## Relative Addressing
+Relative addressing is a global mode switch (rather than flag per instruction or src register).  A write to the address register switches to relative addressing mode, and an instruction with the `(ul)` flag switches back.  For example, the following shader:
+```
+precision mediump float;
+precision mediump int;
+uniform int idx;
+uniform mat4 m[4];
+
+void main()
+{
+	gl_FragColor = m[1][idx];
+}
+```
+will result in the following snippet for the address relative load:
+```
+mova a0.x, hr0.x
+; need 5 cycles 
+(rpt5)nop 
+mov.f32f32 r0.x, c<a0.x + 16>
+mov.f32f32 r0.y, c<a0.x + 17>
+(ul)mov.f32f32 r0.z, c<a0.x + 18>
+mova a0.x, hr0.x
+cov.f32f16 hr0.x, r0.x
+cov.f32f16 hr0.y, r0.y
+cov.f32f16 hr0.z, r0.z
+(rpt2)nop
+(ul)mov.f32f32 r0.x, c<a0.x + 19>
+```
+TBD: why the `cov.f32f16` are not address relative?  Because they are within the 5 instruction slot window after the `mova` or because src/dst types differ?
