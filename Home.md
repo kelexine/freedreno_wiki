@@ -1,10 +1,10 @@
 # Welcome to the freedreno wiki!
 
 ## Devices: 
-* [HP TouchPad](https://github.com/freedreno/freedreno/wiki/HP-TouchPad)
-* [Galaxy S3 LTE](https://github.com/freedreno/freedreno/wiki/Samsung-Galaxy-S-III-%28LTE%29)
-* Nexus 4
-* [ifc6410](https://github.com/freedreno/freedreno/wiki/Ifc6410)
+* [[HP TouchPad|HP-TouchPad]]
+* [[Galaxy S3 LTE|Samsung-Galaxy-S-III-(LTE)]]
+* [[Nexus 4|Nexus-4]]
+* [[ifc6410|Ifc6410]]
 
 ## Technical Information:
 * [[Useful Information|Useful-Information]]
