@@ -8,6 +8,7 @@
 
 ## Technical Information:
 * [[Useful Information|Useful-Information]]
+* [[Reverse Engineering Tools|Reverse-Engineering-Tools]]
 * [[Command Stream Format|Command-Stream-Format]]
    * The basic packet format (described in this page) is same for a3xx and a2xx although all the registers and some of the packet types differ.
 * [[A2xx Shader Instruction Set Architecture|A2XX-Shader-Instruction-Set-Architecture]]
