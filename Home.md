@@ -8,6 +8,7 @@
 * [[Adreno Tiling|Adreno-Tiling]] - how tiling works on adreno (a2xx and a3xx)
 * [[A2xx Shader Instruction Set Architecture|A2XX-Shader-Instruction-Set-Architecture]]
 * [[A3xx Shader Instruction Set Architecture|A3XX-Shader-Instruction-Set-Architecture]]
+* [[Frequently Asked Questions|FAQ]]
 
 ### Devices: 
 * [[HP TouchPad|HP-TouchPad]]
