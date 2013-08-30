@@ -1,5 +1,8 @@
-Some debugging, etc, tips:
+##### Table of Contents  
+* [Getting Kernel Traces](#kerneltraces)
+* [err: request_firmware for vidc_1080p.fw error -2](#vidcfwerr)
 
+<a name="kerneltraces"/>
 ### Getting Kernel Traces
 If you don't have a debug UART (for example on a form factor device like phone or tablet), you have a couple options.  If the device does not reboot before you have a chance to dump traces:
 ```
@@ -13,6 +16,7 @@ If the device does reboot before you have a chance to collect traces, then the a
 ```
 (If needed, switch back to a known good kernel to collect traces)
 
+<a name="vidcfwerr"/>
 ### err: request_firmware for vidc_1080p.fw error -2
 The vidc driver (hw accel video encode/decode... nothing to do w/ 2d/3d/freedreno) in msm android kernel is particularly badly behaved when it can't load it's firmware.  If the driver is compiled into the kernel (not built as a module), it needs it's firmware before the root filesystem is mounted.  You either need to put vidc_1080p.fw in the initrd, or disable vidc if you don't need it (`CONFIG_MSM_VIDC=n`) or build vidc as a module (`CONFIG_MSM_VIDC=m`) and load it after the root filesystem is mounted.
 
