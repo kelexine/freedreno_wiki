@@ -55,6 +55,7 @@ NOTES:
 * the games with lower framerates tend to suffer due to heavy vertex shader workload because binning-pass is not implemented yet.  So vertex shaders are executed for each (approx) 256x256 tile.  This matters less for apps like window managers or xbmc, which would benefit more from compiler optimizations.
 
 #### Adreno 2xx
+TODO
 
 ### Devices: 
 * [[HP TouchPad|HP-TouchPad]]
