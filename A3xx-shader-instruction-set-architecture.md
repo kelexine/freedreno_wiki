@@ -147,7 +147,7 @@ There are limitations about use of const src arguments for instructions, and in 
 * cat4 cannot take a const src
 
 ## Relative Addressing
-Relative addressing is a global mode switch (rather than flag per instruction or src register).  A write to the address register switches to relative addressing mode, and an instruction with the `(ul)` flag switches back.  For example, the following shader:
+For cat1 instructions, there is a bit indicating relative src, and a second bit to indicate const or gpr register file.  A write to the address register seems to need 5 instruction slots before it can be used.  Seems like the `(ul)` flag indicates the last relative instruction.  For example, the following shader:
 ```
 precision mediump float;
 precision mediump int;
@@ -174,4 +174,3 @@ cov.f32f16 hr0.z, r0.z
 (rpt2)nop
 (ul)mov.f32f32 r0.x, c<a0.x + 19>
 ```
-TBD: why the `cov.f32f16` are not address relative?  Because they are within the 5 instruction slot window after the `mova` or because src/dst types differ?
