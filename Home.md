@@ -2,6 +2,7 @@
 
 ### Technical Information:
 * [[Git Trees & Branches|Git-Trees-&-Branches]]
+* [[Freedreno Architecture|Architecture]]
 * GPU Docs:
   * [[Reverse Engineering Tools|Reverse-Engineering-Tools]]
   * [[Useful Information|Useful-Information]]
