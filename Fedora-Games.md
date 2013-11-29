@@ -1,7 +1,7 @@
 ### Stuff in Fedora Repos
 What I install to have a bunch of games to test/debug with:
 
-    sudo dnf install vegastrike sumwars ember xonotic supertuxkart extremetuxracer
+    sudo dnf install vegastrike sumwars ember xonotic supertuxkart extremetuxracer alienarena bzflag maniadrive neverball tremulous
 
 note that some have very large (~1GiB) data files.  Check [[Status|Status]] to see what actually works.
 
@@ -11,7 +11,7 @@ note that some have very large (~1GiB) data files.  Check [[Status|Status]] to s
 
 Since it is not yet in rpmfusion for ARM:
 
-    yum-config-manager --add-repo http://people.freedesktop.org/~robclark/xbmc-repo/f19/xbmc.repo
+    yum-config-manager --add-repo http://people.freedesktop.org/~robclark/xbmc-repo/xbmc.repo
 
 I've built all those against Fedora 19, but they seem to work fine for Fedora 20.
 
