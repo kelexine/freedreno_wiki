@@ -52,6 +52,26 @@ Missing:
    <th>supertuxkart</th>
    <td>works except msaa (~20-30fps w/ bo-cache)</td>
  </tr>
+ <tr>
+   <th>alienarena</th>
+   <td>crashes in game (in Mod_LoadLeafs().. does not appear to be freedreno related)</td>
+ </tr>
+ <tr>
+   <th>bzflag</th>
+   <td>appears to work</td>
+ </tr>
+ <tr>
+   <th>maniadrive</th>
+   <td>crashes at startup (<code>unknown VS semantic name: BCOLOR</code>)</td>
+ </tr>
+ <tr>
+   <th>neverball</th>
+   <td>appears to work</td>
+ </tr>
+ <tr>
+   <th>tremulous</th>
+   <td>appears to work (~20fps at 1280x720)</td>
+ </tr>
 </table>
 NOTES:
 * fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit)
