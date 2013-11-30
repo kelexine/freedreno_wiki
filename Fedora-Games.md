@@ -7,13 +7,10 @@ note that some have very large (~1GiB) data files.  Check [[Status|Status]] to s
 
 ### XBMC
 
-> NOTE: below instructions not working yet.. you can download the rpm's manually and install, but dnf and yum seem unhappy with the repo so I'm probably doing something wrong..
-
 Since it is not yet in rpmfusion for ARM:
 
     yum-config-manager --add-repo http://people.freedesktop.org/~robclark/xbmc-repo/xbmc.repo
-
-I've built all those against Fedora 19, but they seem to work fine for Fedora 20.
+    yum install xbmc
 
 ### Misc
 In theory, Aleph One engine + marathon from here:
