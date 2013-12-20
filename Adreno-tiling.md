@@ -40,7 +40,7 @@ The blob driver assigns each tile a `VSC_PIPE` (Visibility Stream C<something>? 
     VSC_PIPE[0x2].CONFIG: { X = 2 | Y = 0 | W = 2 | H = 2 }
     VSC_PIPE[0x3].CONFIG: { X = 2 | Y = 2 | W = 2 | H = 2 }
 
-For each pipe the driver configures pipe buffer address/size (`VSC_PIPE[n].DATA_ADDRESS` and `VSC_PIPE[n].DATA_LENGTH`), which gives the gpu a location to store the visibility stream data.  And the size buffer (`VSC_SIZE_ADDRESS`), a 4 byte * 8 pipes buffer, where the gpu stores amount of data written to each pipe buffer.  This is used during the binning pass to control which vertices are stored to which pipe.
+For each pipe the driver configures pipe buffer address/size (`VSC_PIPE[p].DATA_ADDRESS` and `VSC_PIPE[p].DATA_LENGTH`), which gives the gpu a location to store the visibility stream data.  And the size buffer (`VSC_SIZE_ADDRESS`), a 4 byte * 8 pipes buffer, where the gpu stores amount of data written to each pipe buffer.  This is used during the binning pass to control which vertices are stored to which pipe.
 
 During the rendering pass, at the start of each tile, the driver configures the gpu to use the data from pipe `p` (ie. appropriate buffer size/address) via `CP_SET_BIN_DATA` packet:
 
