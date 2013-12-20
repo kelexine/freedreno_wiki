@@ -1,4 +1,4 @@
-Like most (all but tegra?) of the embedded/SoC gpu's, adreno is a tiling based architecture.  However the way that it is implemented is a bit simpler.
+Like many of the embedded/SoC gpu's, adreno is a tiling based architecture.  However the way that it is implemented is a bit simpler.
 
 Most tilers render small (32x32 and/or 64x64) tiles, with the hw somehow sorting geometry per tile.  Usually non-visible surfaces for a given tile are ignored.  (IMG/sgx does per-pixel hidden surface removal, unlike the others which are per primitive.  The value of this for general use is debatable.)
 
@@ -27,6 +27,35 @@ This is what is currently implemented in the gallium driver.  It is not necessar
 ### Optimized Approach:
 
 The naive approach has the disadvantage that the vertex shader runs for each vertex for each bin.  But this can be split into two passes to reduce the overhead.  In the first pass (the "binning" pass), the vertices are split into per-tile bins.  This information is used in the second pass to limit the vertices processed for each bin.  There is no requirement to use the same vertex shader on both passes, the binning pass can use a simplified shader which only computes `gl_Position`/`gl_PointSize`.
+
+> NOTE the below notes are for a3xx, but a2xx should be roughly similar
+
+The blob driver assigns each tile a `VSC_PIPE` (Visibility Stream C<something>? Pipe).  There are eight pipes, and more than one tile can be assigned to a pipe, ie, it could use four pipes for an arrangement of 4x4 tiles, like so:
+
+    #  X, Y = upper-left tile coord of group of tiles mapped to pipe
+    #  W, H = size of group in tiles, so below each pipe is mapped to
+    #         a 2x2 group of tiles
+    VSC_PIPE[0].CONFIG: { X = 0 | Y = 0 | W = 2 | H = 2 }
+    VSC_PIPE[0x1].CONFIG: { X = 0 | Y = 2 | W = 2 | H = 2 }
+    VSC_PIPE[0x2].CONFIG: { X = 2 | Y = 0 | W = 2 | H = 2 }
+    VSC_PIPE[0x3].CONFIG: { X = 2 | Y = 2 | W = 2 | H = 2 }
+
+For each pipe the driver configures pipe buffer address/size (`VSC_PIPE[n].DATA_ADDRESS` and `VSC_PIPE[n].DATA_LENGTH`), which gives the gpu a location to store the visibility stream data.  And the size buffer (`VSC_SIZE_ADDRESS`), a 4 byte * 8 pipes buffer, where the gpu stores amount of data written to each pipe buffer.  This is used during the binning pass to control which vertices are stored to which pipe.
+
+During the rendering pass, at the start of each tile, the driver configures the gpu to use the data from pipe `p` (ie. appropriate buffer size/address) via `CP_SET_BIN_DATA` packet:
+
+	OUT_PKT3(ring, CP_SET_BIN_DATA, 2);
+	OUT_RELOC(ring, pipe[p].bo, 0);  /* same value as VSC_PIPE[p].DATA_ADDRESS */
+	OUT_RELOC(ring, size_addr_bo, (p * 4));  /* same value as VSC_SIZE_ADDRESS + (p * 4) */
+
+	OUT_PKT0(ring, REG_A3XX_PC_VSTREAM_CONTROL, 1);
+	OUT_RING(ring, A3XX_PC_VSTREAM_CONTROL_SIZE(pipe[p].config.w * pipe[p].config.h) |
+			A3XX_PC_VSTREAM_CONTROL_N(n));  /* N is 0..(SIZE-1) */
+
+	OUT_PKT3(ring, CP_SET_BIN, 3);
+	OUT_RING(ring, 0x00000000);
+	OUT_RING(ring, CP_SET_BIN_1_X1(x1) | CP_SET_BIN_1_Y1(y1));
+	OUT_RING(ring, CP_SET_BIN_2_X2(x2) | CP_SET_BIN_2_Y2(y2));
 
 ### Performance Notes:
 
