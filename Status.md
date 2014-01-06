@@ -75,8 +75,6 @@ Missing:
 </table>
 NOTES:
 * fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit)
-* etuxracer and supertuxkart, in particular, trigger creation of 150-200 transient buffer objects (bo's) per frame, and heavily benefit (ie. double framerate) from caching and re-using bo's.  There is a work-in-progress patch for this in libdrm_freedreno, but will need to add an MADVISE type kernel API to do this properly.
-* etuxracer and supertuxkart use an old trick using alpha-test for transparency (rather than enabling GL_BLEND).  In some cases, they use an alpha-to-coverage trick, which requires at least MSAA 2x, which is not implemented yet.  These textures will appear opaque.  (In some ways, it is an application bug, since it should handle the non-MSAA case.)
 * the games with lower framerates tend to suffer due to heavy vertex shader workload because binning-pass is not implemented yet.  So vertex shaders are executed for each (approx) 256x256 tile.  This matters less for apps like window managers or xbmc, which would benefit more from compiler optimizations.
 
 ### Adreno 2xx
