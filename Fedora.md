@@ -6,13 +6,13 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 
 ### Fedora 19
 
-* `$filesystem`: [Fedora-armhfp-19-Beta-1-sda.raw.xz](https://dl.fedoraproject.org/pub/fedora-secondary/releases/test/19-Beta/Images/armhfp/Fedora-armhfp-19-Beta-1-sda.raw.xz) - see https://fedoraproject.org/wiki/Architectures/ARM/F19/Beta
-* `$prebuilt`: [ifc6410-freedreno-drm.tgz](http://people.freedesktop.org/~robclark/f19/ifc6410-freedreno-drm.tgz)
+* *`filesystem`*: [Fedora-armhfp-19-Beta-1-sda.raw.xz](https://dl.fedoraproject.org/pub/fedora-secondary/releases/test/19-Beta/Images/armhfp/Fedora-armhfp-19-Beta-1-sda.raw.xz) - see https://fedoraproject.org/wiki/Architectures/ARM/F19/Beta
+* *`prebuilt`*: [ifc6410-freedreno-drm.tgz](http://people.freedesktop.org/~robclark/f19/ifc6410-freedreno-drm.tgz)
 
 ### Fedora 20
 
-* `$filesystem`: [Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz](http://download.fedoraproject.org/pub/fedora/linux/releases/test/20-Beta/Images/armhfp/Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz)
-* `$prebuilt`: [prebuilt-freedreno-f20.tgz](http://people.freedesktop.org/~robclark/f20/prebuilt-freedreno-f20.tgz)
+* *`filesystem`*: [Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz](http://download.fedoraproject.org/pub/fedora/linux/releases/test/20-Beta/Images/armhfp/Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz)
+* *`prebuilt`*: [prebuilt-freedreno-f20.tgz](http://people.freedesktop.org/~robclark/f20/prebuilt-freedreno-f20.tgz)
 
 ### Instructions
 
@@ -22,7 +22,7 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
  * connect to device: `adb shell`
  * on device, `cd /system/etc; tar czvf /data/firmware.tgz firmware` (if you do not have tar, see [[Getting Busybox|FAQ#busybox]])
  * back on host: `adb pull /data/firmware.tgz`
-3. on your host, `xzcat $filesystem > /dev/sdN`  (ie, `/dev/sdb`) to extract filesystem to usb or sata disk that you will use 
+3. on your host, <code>xzcat <em>filesystem</em> > /dev/sdN</code>  (ie, `/dev/sdb`) to extract filesystem to usb or sata disk that you will use 
 4. Use gparted or similar tool to resize the 3rd partition (rootfs) to the remaining size of the disk.  Or optionally create a 4th partition for `/home`.
  * NOTE: I had to `sync`, then remove and re-plug my USB disk before using gparted to resize.
 4. mount to rootfs partition, /dev/sdN3, and extract the firmware we saved earlier:
@@ -35,7 +35,7 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 7. Install X11 and gnome-desktop: `yum install xorg-x11-server-Xorg xorg-x11-drv-evdev @gnome-desktop`
 8. xorg conf file, `/etc/X11/xorg.conf.d/90-freedreno.conf` (listed below)
 9. If you don't feel like compiling libddrm/mesa/xf86-video-freedreno, then download the prebuilt and:
- * `cd / ; wget $prebuilt; tar xzvf $prebuilt`
+ * <code>cd / ; wget <em>prebuilt</em>; tar xzvf <em>prebuilt</em></code>
 10. Optionally, other stuff you might want to install:
  * https://github.com/freedreno/nexus4-fedora/raw/master/rootfs/08-es2gears.tar.gz
  * https://github.com/freedreno/nexus4-fedora/raw/master/rootfs/05-term-resize.tar.gz
