@@ -2,6 +2,7 @@
 * [Getting Kernel Traces](#kerneltraces)
 * [err: request_firmware for vidc_1080p.fw error -2](#vidcfwerr)
 * [Making NetworkManager behave](#networkmanager)
+* [Getting Busybox (tar, etc)](#busybox)
 
 <a name="kerneltraces"/>
 ### Getting Kernel Traces
@@ -28,4 +29,14 @@ If NetworkManager is eating a lot of CPU, it is probably being confused by the r
 
     [keyfile]
     unmanaged-devices=interface-name:rmnet0;interface-name:rmnet1;interface-name:rmnet2;interface-name:rmnet3;interface-name:rmnet4;interface-name:rmnet5;interface-name:rmnet6;interface-name:rmnet7;interface-name:rmnet_smux0
+
+<a name="busybox"/>
+### Getting Busybox (tar, etc)
+
+If you do not have tar on the board/phone/tablet running android, download it from http://busybox.net/downloads/binaries/latest/busybox-armv7l. Use: 
+
+    adb push busybox-armv7l /system/bin/busybox
+    adb shell chmod 0777 /system/bin/busybox
+
+Then either use `busybox tar ...` or create a symbolic link named tar to busybox to use it
 
