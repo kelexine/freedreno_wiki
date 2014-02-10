@@ -30,7 +30,7 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 5. unmount rootfs, plug drive to board, and boot fedora:
  * if android still running: `sudo fastboot reboot-bootloader`
  * once board is booted to fastboot, if you want to prevent android from booting automatically: `sudo fastboot erase boot`
- * see device specific page for boot image and instructions: [[Ifc6410|ifc6410]], [[bStem|bStem]], [[apq8074dragonboard|apq8074 dragonboard]]
+ * see device specific page for boot image and instructions: [[ifc6410|Ifc6410]], [[bStem|bStem]], [[apq8074 dragonboard|apq8074dragonboard]]
 6. On board, login as root via serial terminal (initially no password).
 7. Install X11 and gnome-desktop: `yum install xorg-x11-server-Xorg xorg-x11-drv-evdev @gnome-desktop`
 8. xorg conf file, `/etc/X11/xorg.conf.d/90-freedreno.conf` (listed below)
