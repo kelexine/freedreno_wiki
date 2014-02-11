@@ -28,7 +28,7 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 4. mount to rootfs partition, /dev/sdN3, and extract the firmware we saved earlier:
  * `cd <mountpath>/lib; tar xzvf path/to/firmware.tgz`
 5. unmount rootfs, plug drive to board, and boot fedora:
- * if android still running: `sudo fastboot reboot-bootloader`
+ * if android still running: `sudo adb reboot-bootloader`
  * once board is booted to fastboot, if you want to prevent android from booting automatically: `sudo fastboot erase boot`
  * see device specific page for boot image and instructions: [[ifc6410|Ifc6410]], [[bStem|bStem]], [[apq8074 dragonboard|apq8074dragonboard]]
 6. On board, login as root via serial terminal (initially no password).
