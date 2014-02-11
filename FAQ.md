@@ -3,6 +3,7 @@
 * [err: request_firmware for vidc_1080p.fw error -2](#vidcfwerr)
 * [Making NetworkManager behave](#networkmanager)
 * [Getting Busybox (tar, etc)](#busybox)
+* [Kernel Debugging Options](kerneldbgopt)
 
 <a name="kerneltraces"/>
 ### Getting Kernel Traces
@@ -40,3 +41,15 @@ If you do not have tar on the board/phone/tablet running android, download it fr
 
 Then either use `busybox tar ...` or create a symbolic link named tar to busybox to use it
 
+<a name="kerneldbgopt"/>
+### Kernel Debugging Options
+
+Useful debug kernel options to enable when debugging kernel problems:
+
+    CONFIG_DETECT_HUNG_TASK=y
+    CONFIG_DEBUG_SPINLOCK=y
+    CONFIG_DEBUG_MUTEXES=y
+    CONFIG_DEBUG_ATOMIC_SLEEP=y
+    CONFIG_STACKTRACE=y
+    CONFIG_DEBUG_BUGVERBOSE=y
+    CONFIG_DEBUG_INFO=y
