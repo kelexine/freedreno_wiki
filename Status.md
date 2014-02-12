@@ -11,7 +11,7 @@ Implemented/Supported:
 * 8b/16b/32b index buffer
 
 Missing:
-* OpenGL 2 - at least some could be supported on a3xx with a bit of work in compiler, but a2xx cannot support all necessary GLSL
+* OpenGL 2 - main thing missing at this point is occlusion query.  You can force a gl2 context to be advertised via `MESA_GL_VERSION_OVERRIDE=2.0`.
 * OpenGLES 3 - a3xx can support GLES3 features in hw, but missing support in gallium driver
 * non-unwindable loops in shaders - should not be too hard to support in a3xx (we already use branching for if/else), is supported by the hw on a2xx but needs a bit of work to figure out how to use it.
 * MSAA
@@ -22,21 +22,22 @@ Missing:
 |       App       | Status |
 |:---------------:|:-------|
 | **gnome-shell** | no known issues |
+| **es2gears**    | works, 900fps (1200fps on apq8074/a330) |
+| **glmark2-es2** | works other than `loop` and `terrain`.. glmark2 score 343 |
 | **compiz**      | should work.. not all plugins tested |
 | **xbmc**        | no known issues, good performance at 1080p, sw decode h264 seems fast enough up to 720p content |
-| **xonotic-glx** | no known issues (15-20fps @720p) |
+| **xonotic-glx** | no known issues (28fps @720p) |
 | **vdrift**      | no known rendering issues.. but slow |
 | **darkplaces**, **openarena**,<br>(and others based on q3 engine)| no known issues (60fps, vsync limited @720p) |
-| **etuxracer**   | works except msaa (~20-30fps w/ bo-cache) |
-| **supertuxkart**| works except msaa (~20-30fps w/ bo-cache) |
+| **etuxracer**   | works except msaa (??fps) |
+| **supertuxkart**| works except msaa (30-60fps depending on level, appears to be CPU limited in most slower spots) |
 | **alienarena**  | crashes in game (in `Mod_LoadLeafs()`.. does not appear to be freedreno related) |
 | **bzflag**      | appears to work |
 | **maniadrive**  | crashes at startup (`unknown VS semantic name: BCOLOR`) |
 | **neverball**   | appears to work |
-| **tremulous**   | appears to work (~20fps at 1280x720) |
+| **tremulous**   | appears to work (??fps at 1280x720) |
 NOTES:
-* fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit)
-* the games with lower framerates tend to suffer due to heavy vertex shader workload because binning-pass is not implemented yet.  So vertex shaders are executed for each (approx) 256x256 tile.  This matters less for apps like window managers or xbmc, which would benefit more from compiler optimizations.
+* fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit); on a320 (unless otherwise noted), 1280x720 (if fullscreen, otherwise results are with XA enabled)
 
 ### Adreno 2xx
 TODO
