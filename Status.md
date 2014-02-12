@@ -19,60 +19,21 @@ Missing:
 * not all TGSI opcode's are implemented, so you might run into a missing one with some weird shaders.. but all the common ones should be implemented
 
 ### Adreno 3xx
-<table>
- <tr><th>App</th><th>Status</th></tr>
- <tr>
-    <th>gnome-shell</th>
-    <td>no known issues</td>
- </tr>
- <tr>
-   <th>compiz</th>
-   <td>should work.. not all plugins tested</td>
- </tr>
- <tr>
-   <th>xbmc</th>
-   <td>no known issues, good performance at 1080p, sw decode h264 seems fast enough up to 720p content</td>
- </tr>
- <tr>
-   <th>xonotic-glx</th>
-   <td>no known issues (15-20fps @720p)</td>
- </tr>
- <tr>
-   <th>vdrift</th>
-   <td>no known rendering issues.. but slow</td>
- </tr>
- <tr>
-   <th>darkplaces, openarena, etc<br>(others based on q3 engine)</td>
-   <td>no known issues (60fps, vsync limited @720p)</th>
- <tr>
-   <th>etuxracer</th>
-   <td>works except msaa (~20-30fps w/ bo-cache)</td>
- </tr>
- <tr>
-   <th>supertuxkart</th>
-   <td>works except msaa (~20-30fps w/ bo-cache)</td>
- </tr>
- <tr>
-   <th>alienarena</th>
-   <td>crashes in game (in Mod_LoadLeafs().. does not appear to be freedreno related)</td>
- </tr>
- <tr>
-   <th>bzflag</th>
-   <td>appears to work</td>
- </tr>
- <tr>
-   <th>maniadrive</th>
-   <td>crashes at startup (<code>unknown VS semantic name: BCOLOR</code>)</td>
- </tr>
- <tr>
-   <th>neverball</th>
-   <td>appears to work</td>
- </tr>
- <tr>
-   <th>tremulous</th>
-   <td>appears to work (~20fps at 1280x720)</td>
- </tr>
-</table>
+|       App       | Status |
+|:---------------:|:-------|
+| **gnome-shell** | no known issues |
+| **compiz**      | should work.. not all plugins tested |
+| **xbmc**        | no known issues, good performance at 1080p, sw decode h264 seems fast enough up to 720p content |
+| **xonotic-glx** | no known issues (15-20fps @720p) |
+| **vdrift**      | no known rendering issues.. but slow |
+| **darkplaces**, **openarena**,<br>(and others based on q3 engine)| no known issues (60fps, vsync limited @720p) |
+| **etuxracer**   | works except msaa (~20-30fps w/ bo-cache) |
+| **supertuxkart**| works except msaa (~20-30fps w/ bo-cache) |
+| **alienarena**  | crashes in game (in `Mod_LoadLeafs()`.. does not appear to be freedreno related) |
+| **bzflag**      | appears to work |
+| **maniadrive**  | crashes at startup (`unknown VS semantic name: BCOLOR`) |
+| **neverball**   | appears to work |
+| **tremulous**   | appears to work (~20fps at 1280x720) |
 NOTES:
 * fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit)
 * the games with lower framerates tend to suffer due to heavy vertex shader workload because binning-pass is not implemented yet.  So vertex shaders are executed for each (approx) 256x256 tile.  This matters less for apps like window managers or xbmc, which would benefit more from compiler optimizations.
