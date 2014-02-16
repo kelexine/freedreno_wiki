@@ -29,7 +29,7 @@ The vidc driver (hw accel video encode/decode... nothing to do w/ 2d/3d/freedren
 If NetworkManager is eating a lot of CPU, it is probably being confused by the rmnet devices. Ask it to ignore them in /etc/NetworkManager/NetworkManager.conf :
 
     [keyfile]
-    unmanaged-devices=interface-name:rmnet0;interface-name:rmnet1;interface-name:rmnet2;interface-name:rmnet3;interface-name:rmnet4;interface-name:rmnet5;interface-name:rmnet6;interface-name:rmnet7;interface-name:rmnet_smux0
+    unmanaged-devices=interface-name:rmnet0;interface-name:rmnet1;interface-name:rmnet2;interface-name:rmnet3;interface-name:rmnet4;interface-name:rmnet5;interface-name:rmnet6;interface-name:rmnet7;interface-name:rmnet8;interface-name:rmnet_smux0;interface-name:rev_rmnet0;interface-name:rev_rmnet1;interface-name:rev_rmnet2;interface-name:rev_rmnet3;interface-name:rev_rmnet4;interface-name:rev_rmnet5;interface-name:rev_rmnet6;interface-name:rev_rmnet7;interface-name:rev_rmnet8
 
 <a name="busybox"/>
 ### Getting Busybox (tar, etc)
