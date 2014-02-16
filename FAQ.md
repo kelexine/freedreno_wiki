@@ -3,7 +3,8 @@
 * [err: request_firmware for vidc_1080p.fw error -2](#vidcfwerr)
 * [Making NetworkManager behave](#networkmanager)
 * [Getting Busybox (tar, etc)](#busybox)
-* [Kernel Debugging Options](kerneldbgopt)
+* [Kernel Debugging Options](#kerneldbgopt)
+* [Prebuilt userspace vs system updates](#prebuiltupdate)
 
 <a name="kerneltraces"/>
 ### Getting Kernel Traces
@@ -53,3 +54,8 @@ Useful debug kernel options to enable when debugging kernel problems:
     CONFIG_STACKTRACE=y
     CONFIG_DEBUG_BUGVERBOSE=y
     CONFIG_DEBUG_INFO=y
+
+<a name="prebuiltupdate"/>
+### Prebuilt userspace vs system updates
+
+If you are using a prebuilt userspace tarball, and system upgrade (yum/dnf/apt-get upgrade, etc) overwrites mesa/libdrm/xf86-video-freedreno, just re-extract latest prebuilt tarball on top.  The most recent prebuilt should be newer version than what is in distro packages.
