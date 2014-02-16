@@ -117,6 +117,8 @@ mad.f32 r0.x, r2.w, r3.w, r0.x
 ```
 rather than needing two nop's for the result of the previous instruction to be available.  The compiler can of course schedule unrelated instructions in those `nop` slots if possible.
 
+An instruction writing a register which was previously a src for texture sample instruction (WAR hazard) needs the `(ss)` bit set.
+
 ## Branches / Flow Control
 Typically simple if/else constructs will be flattened out, with all legs of the branch executed, and then `sel` instructions used to conditionally write back the results from the leg of the branch that was "taken" from a flow control point of view.  Divergent flow control amonst threads is typically expensive (ie. hardware ends up having to execute one thread at a time within the thread-group), and so a compiler will normally try to avoid it.
 
