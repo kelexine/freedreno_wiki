@@ -1,0 +1,1 @@
+Details on how to get Linux working on the Nexus 7 Flo https://github.com/crondog/arch-flo
