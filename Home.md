@@ -22,6 +22,7 @@ See [[Status|Status]].
   * [[HP TouchPad|HP-TouchPad]]
   * [[Galaxy S3 LTE|Samsung-Galaxy-S-III-(LTE)]]
   * [[Nexus 4|Nexus-4]]
+  * [[Nexus 7 Flo|Nexus-7-Flo]]
 * ARM boards:
   * [[ifc6410|Ifc6410]]
   * [[bSTem|bStem]]
