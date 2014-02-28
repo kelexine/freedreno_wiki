@@ -1,10 +1,24 @@
-##### Table of Contents  
+##### Table of Contents
+* [Root password](#rootpasswd)
 * [Getting Kernel Traces](#kerneltraces)
 * [err: request_firmware for vidc_1080p.fw error -2](#vidcfwerr)
 * [Making NetworkManager behave](#networkmanager)
 * [Getting Busybox (tar, etc)](#busybox)
 * [Kernel Debugging Options](#kerneldbgopt)
 * [Prebuilt userspace vs system updates](#prebuiltupdate)
+
+
+<a name="rootpasswd"/>
+### Root password
+I'm not actually sure, it seems to have changed since earlier fedora arm filesystems.  (If someone knows, please edit this ;-))
+
+What I do after creating a new filesystem is just to mount the disk on my laptop, and edit `$mountpoint/etc/shadow` and change root to:
+
+    root::15921:0:99999:7:::
+
+(ie. remove what is between the first and second `:`)
+
+There may of course be other better ways, but that is pretty simple and works for me.
 
 <a name="kerneltraces"/>
 ### Getting Kernel Traces
