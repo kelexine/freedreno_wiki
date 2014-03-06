@@ -19,7 +19,7 @@ Here is a list of things needed, in no particular order.
  * texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
  * sRGB
  * packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
- * EXT_texture_shared_exponent (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
+ * [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * transform feedback
  * UBO's
 * gl3 support:
@@ -28,7 +28,7 @@ Here is a list of things needed, in no particular order.
  * 32b float depth (`PIPE_FORMAT_Z32_FLOAT` and `PIPE_FORMAT_Z32_FLOAT_S8X24_UINT`)
  * texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
  * packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
- * EXT_texture_shared_exponent (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
+ * [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * transform feedback
 
 > NOTE: gl3 is a bit more of a stretch goal.. a2xx will never be able to support gl3, a3xx may be able to but I'm unsure about some features.  But at least enabling the features that are possible will enable some gl3 functionality via extensions.
