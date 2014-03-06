@@ -33,6 +33,8 @@ Here is a list of things needed, in no particular order.
 
 > NOTE: gl3 is a bit more of a stretch goal.. a2xx will never be able to support gl3, a3xx may be able to but I'm unsure about some features.  But at least enabling the features that are possible will enable some gl3 functionality via extensions.
 
+### mesa/gallium:
+* add support for [EGL_ARM_pixmap_multisample_discard](http://www.khronos.org/registry/egl/extensions/ARM/EGL_ARM_pixmap_multisample_discard.txt) and/or [GL_EXT_multisampled_render_to_texture](https://www.khronos.org/registry/gles/extensions/EXT/EXT_multisampled_render_to_texture.txt).. either or both of these would be a big win for MSAA on tiler gpu's.  Also would be possibly worthwhile to implement a GL/GLX version of the same extensions.  Extension needs to be implemented in mesa and multisample-discard attribute passed through to gallium driver.
 
 ### xf86-video-freedreno:
 * XA composite support  
