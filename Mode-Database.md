@@ -1,4 +1,8 @@
-on current kernels, the pixel clk setting code (in mach-msm) supports only a fixed set of frequencies.  To keep track of what frequencies are needed, this page is to keep track of different modes.  Please add to it, but be sure to avoid duplicates.  You can find these values for your monitor in `/var/log/Xorg.0.log` or drm debug kernel traces.  Keep sorted by pixel clock:
+On current kernels, the pixel clk setting code (in mach-msm) supports only a fixed set of frequencies.  To keep track of what frequencies are needed, this page is to keep track of different modes.  Please add to it, but be sure to avoid duplicates.  You can find these values for your monitor in `/var/log/Xorg.0.log` or drm debug kernel traces.
+
+## Mode Table
+
+Keep sorted by pixel clock:
 
                                 pixclk
                                   |
@@ -40,5 +44,39 @@ on current kernels, the pixel clk setting code (in mach-msm) supports only a fix
     Modeline 18:"640x480"    60  25200 640 656 752 800 480 490 492 525 0x40 0xa
     Modeline 52:"640x480"    60  25175 640 656 752 800 480 490 492 525 0x40 0xa
 
-### Notes
+## Frequencies Supported:
+
+### mdp4 / msm-3.4
+
+ - [ ] 162000
+ - [ ] 157000
+ - [X] 148500
+ - [ ] 148352
+ - [ ] 146250
+ - [ ] 136750
+ - [ ] 135000
+ - [X] 108000
+ - [ ]  88750
+ - [ ]  78800
+ - [ ]  75000
+ - [X]  74250
+ - [ ]  74176
+ - [X]  65000
+ - [ ]  57284
+ - [ ]  50000
+ - [ ]  49500
+ - [ ]  40000
+ - [ ]  36000
+ - [ ]  31500
+ - [ ]  28320
+ - [ ]  27027
+ - [X]  27000
+ - [X]  25200
+ - [ ]  25175
+
+### mdp5
+
+TBD
+
+## Notes
 on 3.4 kernel, see `clk_tbl_tv` in `arch/arm/mach-msm/clock-8960.c` and `hdmi_pll_set_rate` in `arch/arm/mach-msm/clock-dss-8960.c`
