@@ -41,3 +41,5 @@ When the application requests results, the driver must sum the results across al
           tile1(S3 - S1) + tile2(S3 - S1) + tile3(S3 - S1) + tile4(S3 - S1);
     Q2 := tile1(S6 - S4) + tile2(S6 - S4) + tile3(S6 - S4) + 
           tile1(S3 - S2) + tile2(S3 - S2) + tile3(S3 - S2) + tile4(S3 - S2);
+
+Note that a single cmdstream buffer containing the draw calls is executed for each tile.  Therefore to write samples to unique addresses per tile a variant of `CP_SET_CONSTANT` is used which adds the value of an immediate (in the [[pm4|Command-Stream-Format]] packet) to the value of a register specified in the pm4 packet.  A scratch register can be used for the per-tile base address, but to have multiple base addresses (for multiple different queries) multiple different scratch registers would be needed.  There are a limited number, some of which are already used for other purposes.  So it is preferable to interleave all sample values for different queries in a single buffer.
