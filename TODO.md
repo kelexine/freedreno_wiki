@@ -37,9 +37,8 @@ Here is a list of things needed, in no particular order.
 * [ ] add support for [EGL_ARM_pixmap_multisample_discard](http://www.khronos.org/registry/egl/extensions/ARM/EGL_ARM_pixmap_multisample_discard.txt) and/or [GL_EXT_multisampled_render_to_texture](https://www.khronos.org/registry/gles/extensions/EXT/EXT_multisampled_render_to_texture.txt).. either or both of these would be a big win for MSAA on tiler gpu's.  Also would be possibly worthwhile to implement a GL/GLX version of the same extensions.  Extension needs to be implemented in mesa and multisample-discard attribute passed through to gallium driver.
 
 ### xf86-video-freedreno:
-* [ ] XA composite support  
- * At the moment only solid fills and copies are hooked up.  Which is enough to accelerate presentation blit for gl apps.  (libxatracker already has composite support, so it should only be a matter of converting EXA composite parameters to XA params and add the calls to `xa_composite_*()`
- * We need to be sure to benchmark to ensure it actually is faster than software
+* [x] XA composite support
+ * NOTE: I still have some work-in-progress patches to XA state tracker to add support more composite operations (eg. solid-fill src or mask, etc), which prevents sw fallbacks in a lot of cases.  With this we are actually faster than software.
 * [ ] Xv support
  * possibly lower priority, as a lot of apps (totem, media-explorer, xbmc, etc) support gl rendering, but would be nice to have for completeness
 
