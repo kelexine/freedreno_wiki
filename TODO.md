@@ -12,7 +12,7 @@ Here is a list of things needed, in no particular order.
   * note gallium will unroll loops with constant # of iterations, and inline functions, if the gallium driver does not support.. sufficient for simple shaders and gles2.
  * [ ] derivative support (`TGSI_OPCODE_DDX`, `TGSI_OPCODE_DDY`)
 * gl2 support:
- * [ ] only thing missing is occlusion query to advertise gl2.0 support (see `_mesa_compute_version()`)
+ * [x] only thing missing is occlusion query to advertise gl2.0 support (see `_mesa_compute_version()`)
  * [ ] additionally sRGB support will bring us up to gl2.1
 * gles3
  * [ ] GLSL version level 130 (integer support and ??)
