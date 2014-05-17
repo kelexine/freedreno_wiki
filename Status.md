@@ -3,7 +3,7 @@ apps/games/features/etc that are known to work or not
 
 ### Features
 Implemented/Supported:
-* OpenGL 1.4 - on best-effort basis
+* OpenGL 2.1 (a3xx) / 1.4 (a2xx) - on best-effort basis
 * OpenGLES 1 and OpenGLES 2
 * textures: 2D, mipmap, cubemap, 3D
 * 16b or 24b depth buffer
