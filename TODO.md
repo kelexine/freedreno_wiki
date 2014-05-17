@@ -13,11 +13,11 @@ Here is a list of things needed, in no particular order.
  * [ ] derivative support (`TGSI_OPCODE_DDX`, `TGSI_OPCODE_DDY`)
 * gl2 support:
  * [x] only thing missing is occlusion query to advertise gl2.0 support (see `_mesa_compute_version()`)
- * [ ] additionally sRGB support will bring us up to gl2.1
+ * [x] additionally sRGB texture support will bring us up to gl2.1
 * gles3
  * [ ] GLSL version level 130 (integer support and ??)
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
- * [ ] sRGB
+ * [ ] sRGB framebuffer support
  * [ ] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [ ] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * [ ] transform feedback
