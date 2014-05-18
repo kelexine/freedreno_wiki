@@ -1,10 +1,11 @@
 Here is a list of things needed, in no particular order.
 
 ### gallium:
-* [ ] MSAA
-* [ ] tiled textures
-* [ ] MRT (multiple render target)
-* [ ] [[Video Encode/Decode|Video-Acceleration]]
+* misc:
+ * [ ] MSAA
+ * [ ] tiled textures
+ * [ ] MRT (multiple render target)
+ * [ ] [[Video Encode/Decode|Video-Acceleration]]
 * compiler:
  * [ ] add relative addressing support to new-compiler (and remove legacy compiler)
  * [ ] integer support
@@ -30,6 +31,12 @@ Here is a list of things needed, in no particular order.
  * [ ] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [ ] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * [ ] transform feedback
+ * [ ] [NV_conditional_render](http://www.opengl.org/registry/specs/NV/conditional_render.txt) (`PIPE_CAP_CONDITIONAL_RENDER`)
+* gl3.1 support:
+ * [ ] GLSL version level 140 (needs ??)
+ * [ ] [ARB_draw_instanced](https://www.opengl.org/registry/specs/ARB/draw_instanced.txt) (`PIPE_CAP_TGSI_INSTANCEID`)
+ * [ ] [ARB_texture_buffer_object](https://www.opengl.org/registry/specs/ARB/texture_buffer_object.txt) (`PIPE_CAP_TEXTURE_BUFFER_OBJECTS`)
+ * [ ] [EXT_texture_snorm](https://www.opengl.org/registry/specs/EXT/texture_snorm.txt)
 
 > NOTE: gl3 is a bit more of a stretch goal.. a2xx will never be able to support gl3, a3xx may be able to but I'm unsure about some features.  But at least enabling the features that are possible will enable some gl3 functionality via extensions.
 
