@@ -18,22 +18,23 @@ Here is a list of things needed, in no particular order.
 * gles3
  * [ ] GLSL version level 130 (integer support and ??)
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
- * [ ] sRGB framebuffer support
  * [ ] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [ ] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * [ ] transform feedback
+ * [ ] sRGB framebuffer support
  * [ ] UBO's
 * gl3 support:
  * [ ] GLSL version level 130 (integer support and ??)
- * [ ] MSAA >= 4
- * [ ] 32b float depth (`PIPE_FORMAT_Z32_FLOAT` and `PIPE_FORMAT_Z32_FLOAT_S8X24_UINT`)
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
  * [ ] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [ ] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * [ ] transform feedback
+ * [ ] MSAA >= 4
+ * [ ] 32b float depth (`PIPE_FORMAT_Z32_FLOAT` and `PIPE_FORMAT_Z32_FLOAT_S8X24_UINT`)
  * [ ] [NV_conditional_render](http://www.opengl.org/registry/specs/NV/conditional_render.txt) (`PIPE_CAP_CONDITIONAL_RENDER`)
 * gl3.1 support:
  * [ ] GLSL version level 140 (needs ??)
+ * [ ] UBO's
  * [ ] [ARB_draw_instanced](https://www.opengl.org/registry/specs/ARB/draw_instanced.txt) (`PIPE_CAP_TGSI_INSTANCEID`)
  * [ ] [ARB_texture_buffer_object](https://www.opengl.org/registry/specs/ARB/texture_buffer_object.txt) (`PIPE_CAP_TEXTURE_BUFFER_OBJECTS`)
  * [ ] [EXT_texture_snorm](https://www.opengl.org/registry/specs/EXT/texture_snorm.txt)
