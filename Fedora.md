@@ -14,6 +14,10 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 * *`filesystem`*: [Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz](http://download.fedoraproject.org/pub/fedora/linux/releases/test/20-Beta/Images/armhfp/Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz)
 * *`prebuilt`*: [prebuilt-freedreno-f20.tgz](http://people.freedesktop.org/~robclark/f20/prebuilt-freedreno-f20.tgz)
 
+NOTE: COPR available for F20 as alternative to prebuilt or building from src:
+
+ http://blog.kwizart.fr/post/2014/03/02/163-mesa-10.2-from-git-for-Fedora-20
+
 ### Rawhide
 
 * *`filesystem`*: TODO (I used fedup to upgrade from f20)
