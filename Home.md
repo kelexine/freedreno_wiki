@@ -28,7 +28,7 @@ Any distro which has a relatively recent mesa, and which packages [xf86-video-fr
   * status: mesa 10.1 and freedreno ddx
   * [instructions / release-notes](http://releases.linaro.org/14.05/ubuntu/ifc6410)
 * Gentoo
-* Arch
+* [[Arch|Arch]]
 
 ### Devices: 
 * Phones/Tablets:
