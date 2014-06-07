@@ -33,9 +33,10 @@ Missing:
 | **supertuxkart**| works except msaa (30-60fps depending on level, appears to be CPU limited in most slower spots) |
 | **alienarena**  | crashes in game (in `Mod_LoadLeafs()`.. does not appear to be freedreno related) |
 | **bzflag**      | appears to work |
-| **maniadrive**  | crashes at startup (`unknown VS semantic name: BCOLOR`) |
+| **maniadrive**  | appears to work |
 | **neverball**   | appears to work |
 | **tremulous**   | appears to work (??fps at 1280x720) |
+| **0ad**         | rendering issues |
 NOTES:
 * fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit); on a320 (unless otherwise noted), 1280x720 (if fullscreen, otherwise results are with XA enabled)
 
