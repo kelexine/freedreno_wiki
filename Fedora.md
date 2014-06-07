@@ -14,6 +14,11 @@ These instructions are to setup a Fedora filesystem on an external usb or sata d
 * *`filesystem`*: [Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz](http://download.fedoraproject.org/pub/fedora/linux/releases/test/20-Beta/Images/armhfp/Fedora-Desktop-armhfp-20-Beta-5-sda.raw.xz)
 * *`prebuilt`*: [prebuilt-freedreno-f20.tgz](http://people.freedesktop.org/~robclark/f20/prebuilt-freedreno-f20.tgz)
 
+### Rawhide
+
+* *`filesystem`*: TODO (I used fedup to upgrade from f20)
+* *`prebuilt`*: rawhide (as of May 2014) has recent enough mesa (10.2-rc4) and `xf86-video-freedreno` packaged already, so no prebuilt needed.  Just `yum install xorg-x11-drv-freedreno`.
+
 ### Instructions
 
 1. Download Fedora filesystem (see links above)
