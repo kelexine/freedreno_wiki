@@ -26,7 +26,7 @@ Missing:
 | **glmark2-es2** | works other than `loop` and `terrain`.. glmark2 score 343 |
 | **compiz**      | should work.. not all plugins tested |
 | **xbmc**        | no known issues, good performance at 1080p, sw decode h264 seems fast enough up to 720p content |
-| **xonotic-glx** | no known issues (28fps @720p) |
+| **xonotic-glx** | no known issues (35fps @720p on firetv) |
 | **vdrift**      | no known rendering issues.. but slow |
 | **darkplaces**, **openarena**,<br>(and others based on q3 engine)| no known issues (60fps, vsync limited @720p) |
 | **etuxracer**   | works except msaa (??fps) |
@@ -36,7 +36,7 @@ Missing:
 | **maniadrive**  | appears to work |
 | **neverball**   | appears to work |
 | **tremulous**   | appears to work (??fps at 1280x720) |
-| **0ad**         | rendering issues |
+| **0ad**         | needs later than alpha 16 (z-fighting issue with earlier versions); generally works, problematic effects/options: *Post Processing*, *Real Water Depth*,  |
 NOTES:
 * fps figures are with msm drm/kms driver (otherwise we can't pageflip and have gpu stall on presentation blit); on a320 (unless otherwise noted), 1280x720 (if fullscreen, otherwise results are with XA enabled)
 
