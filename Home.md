@@ -26,7 +26,9 @@ Any distro which has a relatively recent mesa, and which packages [xf86-video-fr
   * [[instructions|Fedora]]
 * Linaro/Ubuntu
   * status: mesa 10.2.1 and freedreno ddx
-  * [instructions / release-notes](http://releases.linaro.org/14.06/ubuntu/ifc6410)
+  * [release-notes](http://releases.linaro.org/14.06/ubuntu/ifc6410)
+  * [instructions](https://wiki.linaro.org/Boards/IFC6410)
+
 * Gentoo
 * [[Arch|Arch]]
 
