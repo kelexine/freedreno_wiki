@@ -12,6 +12,7 @@
   * [[A2xx Shader Instruction Set Architecture|A2XX-Shader-Instruction-Set-Architecture]]
   * [[A3xx Shader Instruction Set Architecture|A3XX-Shader-Instruction-Set-Architecture]]
   * [Gallium Docs](http://gallium.readthedocs.org/en/latest/)
+  * [[kgsl kernel driver|kgsl-kernel]]
 * [[Setting up fedora filesystem|Fedora]]
 * [[Frequently Asked Questions|FAQ]]
 * [[TODO|TODO]]
