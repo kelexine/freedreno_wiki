@@ -111,7 +111,10 @@ then in kgsl_ringbuffer_flush:
         .flags = KGSL_CONTEXT_SUBMIT_IB_LIST,
     };
 
-And of course, you'll need to set KGSL_CONTEXT_PREAMBLE flag in kgsl_pipe_new
+And of course, you'll need to set KGSL_CONTEXT_PREAMBLE flag in kgsl_pipe_new.
+
+upd: you might also need to pass FD_MESA_DEBUG="direct" so that shaders get embedded within
+the IB, if you won't use it then you may need to have shader loading code in IB 0
 
 ### Power management
 
