@@ -30,7 +30,7 @@ set of context flags, these are:
     #define KGSL_CONTEXT_TYPE_RS 4
     #define KGSL_CONTEXT_TYPE_UNKNOWN 0x1E
 
-Freedreno creates a single drawing contexts for each pipe, i.e:
+Freedreno creates a single drawing context for each pipe, i.e:
 
     struct fd_pipe * kgsl_pipe_new(struct fd_device *dev, enum fd_pipe_id id)
     {
@@ -76,7 +76,7 @@ Depending on drawing context flags kgsl will handle IBs differently:
 The default way has its own implications, it builds gpu state shadow and uses it to save
 context information, some kernel drivers have it broken and qcom blob always uses the preamble
 approach. But since currently freedreno always uses single IB and provides enough information
-to setup the gpu state, you can easily change command submission to use preamble by providing
+to setup the gpu state you can easily change command submission to use preamble by providing
 IB 0 with a single CP_NOP instruction, i.e. in kgsl_ringbuffer_new:
 
     kgsl_ring->tmp_bo = kgsl_rb_bo_new(to_kgsl_pipe(pipe), 0x10000);
@@ -110,3 +110,5 @@ then in kgsl_ringbuffer_flush:
         .numibs = 2,
         .flags = KGSL_CONTEXT_SUBMIT_IB_LIST,
     };
+
+And of course, you'll need to set KGSL_CONTEXT_PREAMBLE flag in kgsl_pipe_new
