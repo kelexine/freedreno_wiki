@@ -112,3 +112,25 @@ then in kgsl_ringbuffer_flush:
     };
 
 And of course, you'll need to set KGSL_CONTEXT_PREAMBLE flag in kgsl_pipe_new
+
+### Power management
+
+kgsl cares about power management, so one have to be careful when doing IB submissions.
+struct kgsl_device has active_cnt field which indicates number of active GPU users (this is NOT
+/dev/kgsl open count, this is something that indicates that GPU is actually being used and needs
+to run some tasks), if this count
+goes to 0 - GPU goes to sleep. In sleep mode GPU doesn't execute IBs, so it's important to keep
+this above 0 if you're waiting for IB to finish. kgsl kernel driver should have
+something like this in IOCTL_KGSL_DEVICE_WAITTIMESTAMP handler:
+
+    _device_waittimestamp(...)
+    {
+        ...
+        device->active_cnt++;
+        // do the wait
+        device->active_cnt--;
+        ...
+    }
+
+if it doesn't, then your driver probably manages power some other way, you'll have to find out how
+qcom's blob does this and do something similar, keeping active_cnt above 0 as needed
