@@ -15,11 +15,16 @@ The HP TouchPad shipped with a modified 2.6.35 kernel.  In addition, there is a 
 * For userland which still supports it, use of the 2.6 kernel is recommended. The 3.0.8 kgsl drivers have been stably backported to it, and the result is available at willcast/kernel_tenderloin branch 2.6.35_desktop.
 * There is now a 3.4.94 kernel at willcast/kernel_tenderloin, branch desktop_3.4.
 * There is also a 3.0.101 kernel at branch desktop_3.0, but it hasn't been touched and is completely untested.
+* The old 3.0.8 kernel is available at freedreno/kernel-msm.
+
+## Fedora installation
+There is a port of Fedora 18 laying around. It has functional graphics.
 
 ## General Development and Ubuntu Installation
-Ubuntu 11.10 and up are all avaliable.
+Ubuntu 11.10 through 13.04 are all avaliable.
+
 ### Ubuntu 13.04, 13.10-dev
-Available from XDA Developers. (The final version of) 13.04 requires a kexec bootloader such as kexecboot or nsboot. These are all available under the Other TouchPad Development forum. (nsboot is definitely recommended over kexecboot.) 13.10 porting is in progress, and a pre-release is nearly available.
+Available from XDA Developers. (The final version of) 13.04 requires a kexec bootloader such as kexecboot or nsboot. These are all available under the Other TouchPad Development forum. (nsboot is definitely recommended over kexecboot.) 13.10 porting is unfinished.
 * [XDA Developers 13.x Development Thread](http://forum.xda-developers.com/showthread.php?t=2225462)
 
 ### Ubuntu 11.10, 12.04, 12.10
