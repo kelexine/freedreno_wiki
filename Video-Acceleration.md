@@ -16,6 +16,8 @@ tiled YUV format: seems libc2d2 (2d api implemented on top of z180 in older a2xx
 
 see: https://android.googlesource.com/platform/hardware/qcom/media/+/master/libc2dcolorconvert/
 
+also see: https://bug707361.bugzilla-attachments.gnome.org/attachment.cgi?id=259762 .. this seems to be the tiled format on apq8064 and before.
+
 ***
 
 seems qcom omx implementation has it's own h264, etc, parsers:
