@@ -6,7 +6,7 @@ Information about freedreno and linux on [Fire TV](http://en.wikipedia.org/wiki/
 
 > UPDATE: how to get root: http://forum.xda-developers.com/showthread.php?t=2783805
 
-> UPDATE: this is the CVE used to bypass the locked bootloader: https://www.codeaurora.org/projects/security-advisories/fastboot-boot-command-bypasses-signature-verification-cve-2014-4325
+> UPDATE: this is the CVE used to bypass the locked bootloader: https://www.codeaurora.org/projects/security-advisories/incomplete-signature-parsing-during-boot-image-authentication-leads-to-signature-forgery-cve-2014-0973
 > (read the patches, not the description)
 
 For now, I'm just collecting notes here so that I don't forget by the time an unlocker is more widely available.  Installing linux to boot off of the internal storage on firetv requires repartitioning internal storage.  Be careful, you can easily result in a bricked firetv.  If you don't understand what these commands, etc, are doing, you probably don't want to blindly follow them.
