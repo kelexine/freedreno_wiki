@@ -11,11 +11,9 @@ Implemented/Supported:
 * 8b/16b/32b index buffer
 
 Missing:
-* OpenGL 2 - main thing missing at this point is occlusion query.  You can force a gl2 context to be advertised via `MESA_GL_VERSION_OVERRIDE=2.0`.
 * OpenGLES 3 - a3xx can support GLES3 features in hw, but missing support in gallium driver
 * non-unwindable loops in shaders - should not be too hard to support in a3xx (we already use branching for if/else), is supported by the hw on a2xx but needs a bit of work to figure out how to use it.
 * MSAA
-* discard/kill in fragment shaders
 * not all TGSI opcode's are implemented, so you might run into a missing one with some weird shaders.. but all the common ones should be implemented
 
 ### Adreno 3xx
