@@ -10,9 +10,10 @@ Here is a list of things needed, in no particular order.
  * [ ] add relative addressing support to new-compiler (and remove legacy compiler)
    * done for CONST (ie. uniforms), not yet for TEMP register file
  * [ ] integer support
+    * partial support, not enabled by default
  * [ ] loops / switch / subroutines
   * note gallium will unroll loops with constant # of iterations, and inline functions, if the gallium driver does not support.. sufficient for simple shaders and gles2.
- * [ ] derivative support (`TGSI_OPCODE_DDX`, `TGSI_OPCODE_DDY`)
+ * [x] derivative support (`TGSI_OPCODE_DDX`, `TGSI_OPCODE_DDY`)
 * gl2 support:
  * [x] only thing missing is occlusion query to advertise gl2.0 support (see `_mesa_compute_version()`)
  * [x] additionally sRGB texture support will bring us up to gl2.1
@@ -54,6 +55,7 @@ Here is a list of things needed, in no particular order.
 ### drm/msm (kernel):
 * mdp4 (apq8060, apq8064, etc):
  * [ ] DSI support
+ * [x] LVDS support
  * [ ] YUV plane (overlay)
  * [ ] plane scaling
 * mdp5 (apq8074, etc):
