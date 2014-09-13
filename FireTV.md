@@ -11,7 +11,7 @@ Information about freedreno and linux on [Fire TV](http://en.wikipedia.org/wiki/
 
 For now, I'm just collecting notes here so that I don't forget by the time an unlocker is more widely available.  Installing linux to boot off of the internal storage on firetv requires repartitioning internal storage.  Be careful, you can easily result in a bricked firetv.  If you don't understand what these commands, etc, are doing, you probably don't want to blindly follow them.
 
-Note that I bootstrapped things by booting off of an existing usb disk with filesystem that I use with [[ifc6410|Ifc6410]]/[[bStem|bStem]]/etc.  You can probably get away with switching around the boot partitions when booted from internal disk, but you'll need too boot from usb disk at least once to merge userdata/cache/system partitions, and to extract new rootfs. 
+Note that I bootstrapped things by booting off of an existing usb disk with filesystem that I use with [[ifc6410|Ifc6410]]/[[bStem|bStem]]/etc.  You can probably get away with switching around the boot partitions when booted from internal disk, but you'll need to boot from usb disk at least once to merge userdata/cache/system partitions, and to extract new rootfs. 
 
 Original partitions:
 
