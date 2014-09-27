@@ -30,10 +30,12 @@ Various 3.0 and 3.4 kernels are available. The 3.0 kernel hasn't been explored m
 
 ## Development Progress
 Currently, these are working:
-* Framebuffer console (although it has graphical corruption on d2vzw - **change module_init to late_initcall**)
+* Framebuffer console (although it has graphical corruption - **change module_init to late_initcall**)
 * USB OTG and ADB server over USB
-* Wi-Fi with the Broadcom DHD driver (brcmfmac will reboot the system with nothing useful in dmesg) - _be careful with firmware paths, currently my solution is to mount Android's /system, /data and /cache filesystems on top of Ubuntu from fstab._
-* The touch screen is reported to work with "evdev" on the Sprint S3. However, on the Verizon model, the server crashes whenever one taps the screen. You can get it working as a trackpad with "xserver-xorg-input-multitouch".
-* X.org with Freedreno (2-D acceleration works, 3-D will cause page faults.) Patches and instructions are available are at the XDA page above.
+* Wi-Fi with the Broadcom "dhd" driver (brcmfmac will reboot the system with nothing useful in dmesg) - be careful with firmware paths, the _b2 part of the extension should not be specified. Use a modprobe conf file to set the firmware_path= and nvram_path= module parameters at load.
+* The touch screen driver requires a patch to emit single-touch events for X.org. After that, it works.
+* X.org with Freedreno (2-D acceleration works, 3-D will cause page faults.) Patches for 2D are no longer required for git versions, as of 09/27/2014.
 
-Untested: Bluetooth, audio and camera. The camera is highly unlikely to work without extra code somewhere. Audio might be doable as it was with the HP Touchpad.
+Untested: Bluetooth, audio and camera. The camera is highly unlikely to work without extra code somewhere. Audio might be doable as it was with the HP Touchpad. Bluetooth should also be possible.
+
+![MATE/Arch Linux ARM on Samsung SGH-T999/d2tmo](http://s13.postimg.org/m7z815xgn/image.png)
