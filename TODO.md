@@ -7,6 +7,7 @@ Here is a list of things needed, in no particular order.
  * [ ] MRT (multiple render target)
  * [ ] [[Video Encode/Decode|Video-Acceleration]]
  * [ ] Emulate unsupported texture wrap modes in shader - a3xx does not seem to support mirror-clamp, mirror-clamp-to-border, and mirror-clamp-to-edge seems to only work for power-of-two textures.
+   * emulation for GL_CLAMP done, for others we have stopped advertising the extensions for now
 * compiler:
  * [ ] add relative addressing support to new-compiler (and remove legacy compiler)
    * done for CONST (ie. uniforms), not yet for TEMP register file
