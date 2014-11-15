@@ -35,14 +35,15 @@ Any distro which has a relatively recent mesa, and which packages [xf86-video-fr
 
 ### Devices: 
 * Phones/Tablets:
-  * [[HP TouchPad|HP-TouchPad]]
-  * [[Galaxy S3 LTE|Samsung-Galaxy-S-III-(LTE)]]
-  * [[Nexus 4|Nexus-4]]
-  * [[Nexus 7 Flo|Nexus-7-Flo]]
+  * [[HP TouchPad|HP-TouchPad]] (a2xx)
+  * [[Galaxy S3 LTE|Samsung-Galaxy-S-III-(LTE)]] (a2xx)
+  * [[Nexus 4|Nexus-4]] (a3xx)
+  * [[Nexus 7 Flo|Nexus-7-Flo]] (a3xx)
 * ARM boards:
-  * [[ifc6410|Ifc6410]]
-  * [[bSTem|bStem]]
-  * [[apq8074 dragonboard|apq8074dragonboard]]
+  * [[ifc6410|Ifc6410]] (a3xx)
+  * [[ifc6540|Ifc6540]] (a4xx)
+  * [[bSTem|bStem]] (a3xx)
+  * [[apq8074 dragonboard|apq8074dragonboard]] (a3xx)
 
 ### Contact:
  * mailing list: [freedreno@lists.freedesktop.org](http://lists.freedesktop.org/mailman/listinfo/freedreno)
