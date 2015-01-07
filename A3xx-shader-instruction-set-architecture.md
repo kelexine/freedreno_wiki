@@ -44,9 +44,26 @@ Complex single src operations, which take more cycles (potentially unpredictable
 Other non-cat4 instructions which read from a register written by a cat4 instruction must have the `(ss)` bit set to sync to the complex-alu pipeline.
 ### Category 5
 Generally texture sample related instructions:
-* `sam (f32)(xyzw)Rdst, Rsrc, s#0, t#0`
+* `sam (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
+* `isam (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
+* `samgq (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
 
-These are the only instructions that write to and read from more than one scalar register.  In particular they write to up to four (as controlled by writemask) successive scalar registers.  The texture coordinate (`Rsrc`) should contain two or three successive coordinates (for normal 2d texture fetch, vs 3d texture fetch, etc)
+These are the only instructions that write to and read from more than one scalar register.  In particular they write to up to four (as controlled by writemask) successive scalar registers.
+
+Each instruction can also have different flags:
+* `.l` - explicit LOD
+* `.b` - LOD bias
+* `.a` - array texture
+* `.3d` - 3d/cube texture
+* `.o` - offset
+* `.s` - shadow comparator
+* `.p` - projector
+
+The `isam` variant expects integer coordinates, while the `sam` variant expects float coordinates. (Note that `isam` will use unnormalized coordinates even if the sampler says otherwise.) Since `isam` wants integer coordinates, they must be provided wrt LOD 0 size, even if specifying a specific LOD. Lastly, if sampling from an integer texture, `(f32)` will cause that integer to be converted to a float, so to obtain correct results, `(u32)` must be used.
+
+`Rsrc0` points to the first register of the sequence: x, y, (`.3d`?) z, (`.s`?) shadow, (`.a`?) array, (`.p`?) projector, and for `samgq`, starting at offset 4 (i.e. padding if not enough flags to force it), dpdx.xy, dpdy.xy
+
+`Rsrc1` points to the first register of the sequence: (`.o`?) offset.xy, (`.3d.o`?) offset.z, (`.l`?) lod, (`.b`?) bias. Note that if not using a `sam.l` or `sam.b` variant, and offset isn't set, `Rsrc1` is omitted entirely.
 
 Other non-cat5 instructions which read from a register written by a cat5 instruction must have the `(sy)` bit set to sync with the texture-fetch pipeline.
 
