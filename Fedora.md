@@ -18,6 +18,10 @@ NOTE: COPR available for F20 as alternative to prebuilt or building from src:
 
  http://blog.kwizart.fr/post/2014/03/02/163-mesa-10.2-from-git-for-Fedora-20
 
+### Fedora 21
+
+f21 should already have everything you need for mesa/libdrm/ddx.
+
 ### Rawhide
 
 * *`filesystem`*: TODO (I used fedup to upgrade from f20)
