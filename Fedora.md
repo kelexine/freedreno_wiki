@@ -20,7 +20,7 @@ NOTE: COPR available for F20 as alternative to prebuilt or building from src:
 
 ### Fedora 21
 
-f21 should already have everything you need for mesa/libdrm/ddx.
+f21 should already have everything you need for mesa/libdrm/ddx.  Be sure to install `mesa-dri-drivers` and `xorg-x11-drv-freedreno`
 
 ### Rawhide
 
