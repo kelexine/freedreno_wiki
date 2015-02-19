@@ -3,12 +3,12 @@ Note: some of the stuff on this page is a bit outdated.. check [instr-a2xx.h](ht
 # Instruction Set Architecture (ISA) Overview
 The adreno GPU has a unified shader architecture, so the same instruction set and shader resources are used by both vertex (VS) and fragment/pixel (PS) shaders.
 
-It bears some resemblances to the [r600](http://www.x.org/docs/AMD/r600isa.pdf) ISA, in that it is a VLIW architecture, with separation of control flow (CF) program, which controls the execution flow, and arithmetic and logic (ALU) / FETCH instructions.  But while the r600 ALU instructions consist of up to 5 scalar operations, the adreno ALU instruction consists of one vec4 operation and/or one scalar operation.
+It bears some resemblances to the [r600](http://www.x.org/docs/AMD/old/r600isa.pdf) ISA, in that it is a VLIW architecture, with separation of control flow (CF) program, which controls the execution flow, and arithmetic and logic (ALU) / FETCH instructions.  But while the r600 ALU instructions consist of up to 5 scalar operations, the adreno ALU instruction consists of one vec4 operation and/or one scalar operation.
 
 The adreno shader consists of 96bit (3 dwords) CF, ALU, and FETCH instructions.
 
 ## Assembler syntax
-The assembler syntax is loosely based on the [r600 assembler syntax](http://www.x.org/docs/AMD/R600-R700-Evergreen_Assembly_Language_Format.pdf), and also a single screenshot in [optimize-adreno.pdf](https://developer.qualcomm.com/download/optimize-adreno.pdf) (pg 6).  As with the r600 assembler syntax, the CF and ALU/FETCH instructions are interleaved for easier reading:
+The assembler syntax is loosely based on the [r600 assembler syntax](http://developer.amd.com/wordpress/media/2012/10/R600-R700-Evergreen_Assembly_Language_Format.pdf), and also a single screenshot in [optimize-adreno.pdf](https://web.archive.org/web/20130823232452/http://developer.qualcomm.com/download/optimize-adreno.pdf) (pg 6).  As with the r600 assembler syntax, the CF and ALU/FETCH instructions are interleaved for easier reading:
 ```
 EXEC ADDR(0x3) CNT(0x1)
    (S)FETCH:	VERTEX	R1.xyz1 = R0.x FMT_32_32_32_FLOAT UNSIGNED STRIDE(12) CONST(10)
