@@ -10,7 +10,6 @@ Here is a list of things needed, in no particular order.
    * emulation for GL_CLAMP done, for others we have stopped advertising the extensions for now
 * compiler:
  * [X] add relative addressing support to new-compiler (and remove legacy compiler)
-   * done for CONST (ie. uniforms), not yet for TEMP register file
  * [X] integer support
  * [ ] loops / switch / subroutines
   * note gallium will unroll loops with constant # of iterations, and inline functions, if the gallium driver does not support.. sufficient for simple shaders and gles2.
