@@ -4,7 +4,6 @@ Here is a list of things needed, in no particular order.
 * misc:
  * [ ] MSAA
  * [ ] tiled textures
- * [ ] MRT (multiple render target)
  * [ ] [[Video Encode/Decode|Video-Acceleration]]
  * [ ] Emulate unsupported texture wrap modes in shader - a3xx does not seem to support mirror-clamp, mirror-clamp-to-border, and mirror-clamp-to-edge seems to only work for power-of-two textures.
    * emulation for GL_CLAMP done, for others we have stopped advertising the extensions for now
@@ -24,8 +23,9 @@ Here is a list of things needed, in no particular order.
  * [x] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
  * [ ] transform feedback
  * [x] sRGB framebuffer support
- * [ ] UBO's
- * [ ] MRT
+ * [x] UBO's
+ * [x] MRT (a3xx)
+ * [ ] MRT (a4xx)
 * gl3 support:
  * [x] GLSL version level 130 (integer support and ??)
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
@@ -37,7 +37,7 @@ Here is a list of things needed, in no particular order.
  * [ ] [NV_conditional_render](http://www.opengl.org/registry/specs/NV/conditional_render.txt) (`PIPE_CAP_CONDITIONAL_RENDER`)
 * gl3.1 support:
  * [ ] GLSL version level 140 (needs ??)
- * [ ] UBO's
+ * [x] UBO's
  * [x] [ARB_draw_instanced](https://www.opengl.org/registry/specs/ARB/draw_instanced.txt) (`PIPE_CAP_TGSI_INSTANCEID`)
  * [ ] [ARB_texture_buffer_object](https://www.opengl.org/registry/specs/ARB/texture_buffer_object.txt) (`PIPE_CAP_TEXTURE_BUFFER_OBJECTS`)
  * [x] [EXT_texture_snorm](https://www.opengl.org/registry/specs/EXT/texture_snorm.txt)
@@ -60,7 +60,7 @@ Here is a list of things needed, in no particular order.
  * [x] YUV plane (overlay)
  * [ ] plane scaling
 * mdp5 (apq8074, etc):
- * [ ] DSI support
+ * [x] DSI support
  * [x] displayport support
  * [x] YUV plane (overlay)
  * [ ] plane scaling
