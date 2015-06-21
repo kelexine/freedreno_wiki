@@ -10,7 +10,7 @@ Here is a list of things needed, in no particular order.
 * compiler:
  * [X] add relative addressing support to new-compiler (and remove legacy compiler)
  * [X] integer support
- * [ ] loops / switch / subroutines
+ * [X] loops / switch / subroutines
   * note gallium will unroll loops with constant # of iterations, and inline functions, if the gallium driver does not support.. sufficient for simple shaders and gles2.
  * [x] derivative support (`TGSI_OPCODE_DDX`, `TGSI_OPCODE_DDY`)
 * gl2 support:
