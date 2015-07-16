@@ -1,5 +1,7 @@
 This is a work-in-progress document describing how to decipher panel driver programming from downstream android dts files, in particular 3.10 based kernels.  I'm working off of the kernel for sony xperia devices, but (I think) other 3.10 based devices should be similar.
 
+## Downstream Panel Drivers
+
 Rather than having per-panel drivers that are decipherable, the downstream kernel uses a "meta" panel driver, with programming sequences taken from device tree (dts) files.  For example, the xperia z3 panel description for the auo novatek 1080p panel has:
 
         dsi_novatek_auo_1080_vid: somc,novatek_auo_1080p_video_panel {
@@ -103,6 +105,49 @@ Rather than having per-panel drivers that are decipherable, the downstream kerne
                         0xFF 0x00 0x00 0x3B 0x00 0x3B 0x8000 0x8000 0x8000>;
         };
 
+## Upstream Panel Drivers
+
 The upstream kernel, by comparison, has the common panel framework (see `drivers/gpu/drm/panel`).  The common panel framework allows for panel drivers to be written once, and shared between different SoC's, so it uses drm's `struct mipi_dsi_device` to abstract away the display driver implementation.  For simple panels that don't require custom programming sequences there is `panel-simple.c`, but that is unlikely to be applicable for the DSI panel in any phone/tablet.  Instead, for panels requiring custom programming sequences, a new panel driver is written.  For this document, I will use the example of the `panel-auo-novatek-1080p-vid.c` driver that I am writing for the AUO panel in my xperia z3.  (Note that sony multi-sources their panel drivers so not all z3's use the AUO panel.)
 
+## Translating Mode Timings
+
+DSI panels tend to support a single fixed resolution, described by `struct drm_display_mode`.  There are two common ways to represent the timings: `hdisplay`/`hsync_start`/`hsync_end`/`htotal` and `vdisplay`/`vsync_start`/`vsync_end`/`vtotal` (which drm uses), versus `width`/`h-front-porch`/`h-back-porch`/`h-sync-width` and `height`/`v-front-porch`/`v-back-porch`/`v-sync-width` (which downstream kernel uses).  Fortunately it is quite easy to convert between the two:
+
+	hdisplay = width
+	hsync_start = hdisplay + hfp;
+	hsync_end = hsync_start + hsw;
+	htotal = hsync_end + hbp;
+
+	vdisplay = y_res;
+	vsync_start = vdisplay + vfp;
+	vsync_end = vsync_start + vsw;
+	vtotal = vsync_end + vbp;
+
+So:
+
+	qcom,mdss-dsi-panel-framerate = <60>;
+	qcom,mdss-dsi-panel-width = <1080>;
+	qcom,mdss-dsi-panel-height = <1920>;
+	qcom,mdss-dsi-h-front-porch = <56>;
+	qcom,mdss-dsi-h-back-porch = <8>;
+	qcom,mdss-dsi-h-pulse-width = <8>;
+	qcom,mdss-dsi-h-sync-skew = <0>;
+	qcom,mdss-dsi-v-back-porch = <8>;
+	qcom,mdss-dsi-v-front-porch = <233>;
+	qcom,mdss-dsi-v-pulse-width = <2>;
+
+becomes:
+
+	static const struct drm_display_mode default_mode = {
+		.clock = 149506,
+		.hdisplay = 1080,
+		.hsync_start = 1080 + 56,
+		.hsync_end = 1080 + 56 + 8,
+		.htotal = 1080 + 56 + 8 + 8,
+		.vdisplay = 1920,
+		.vsync_start = 1920 + 233,
+		.vsync_end = 1920 + 233 + 2,
+		.vtotal = 1920 + 233 + 2 + 8,
+		.vrefresh = 60,
+	};
 
