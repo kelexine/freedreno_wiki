@@ -151,3 +151,22 @@ becomes:
 		.vrefresh = 60,
 	};
 
+## Translating DSI Mode Flags
+
+DSI has quite a number of different ways it can operate:
+ * command mode (transmitting framebuffer data only when it changes) versus video mode (continuous vsync refresh, like a traditional desktop monitor)
+ * dynamic changing between high speed and low speed operation versus not
+ * etc
+
+The upstream kernel has a number of `mode_flags` to configure the behaviour of the SoC's DSI driver so that it can talk properly to the panel.  In the downstream dts file, this is controlled by a number of different (sometimes optional) fields in the dts file.
+
+ * `qcom,mdss-dsi-panel-type = "dsi_video_mode"` -> `MIPI_DSI_MODE_VIDEO`
+   * no flag needed for `dsi_cmd_mode`
+ * `qcom,mdss-dsi-h-sync-pulse = <1>` -> `MIPI_DSI_MODE_VIDEO_HSE`
+ * not having `qcom,mdss-dsi-tx-eot-append` -> `MIPI_DSI_MODE_EOT_PACKET` (note upstream flag disables, while downstream dts entry enables)
+ * If panel uses both high-speed and low-power mode, set `MIPI_DSI_CLOCK_NON_CONTINUOUS`.  Check the `-command-state` fields for `dsi_lp_mode` and `dsi_hs_mode`.  If you see both, then set `MIPI_DSI_CLOCK_NON_CONTINUOUS` since we are switching dynamically between different speeds.
+
+TODO probably more flags to document..
+
+## Translating Programming Sequences:
+
