@@ -151,11 +151,21 @@ becomes:
 		.vrefresh = 60,
 	};
 
-## Translating DSI Mode Flags
+also, slightly related, the panel physical dimensions:
+
+	somc,mdss-phy-size-mm = <64 114>;
+
+becomes:
+
+	panel->connector->display_info.width_mm = 64;
+	panel->connector->display_info.height_mm = 114;
+
+## Translating DSI Configuration
 
 DSI has quite a number of different ways it can operate:
  * command mode (transmitting framebuffer data only when it changes) versus video mode (continuous vsync refresh, like a traditional desktop monitor)
  * dynamic changing between high speed and low speed operation versus not
+ * various different # of lanes
  * etc
 
 The upstream kernel has a number of `mode_flags` to configure the behaviour of the SoC's DSI driver so that it can talk properly to the panel.  In the downstream dts file, this is controlled by a number of different (sometimes optional) fields in the dts file.
@@ -167,6 +177,20 @@ The upstream kernel has a number of `mode_flags` to configure the behaviour of t
  * If panel uses both high-speed and low-power mode, set `MIPI_DSI_CLOCK_NON_CONTINUOUS`.  Check the `-command-state` fields for `dsi_lp_mode` and `dsi_hs_mode`.  If you see both, then set `MIPI_DSI_CLOCK_NON_CONTINUOUS` since we are switching dynamically between different speeds.
 
 TODO probably more flags to document..
+
+DSI can also operate in configurations with various # of lanes, pixel format, etc.  For example:
+
+            qcom,mdss-dsi-lane-0-state;
+            qcom,mdss-dsi-lane-1-state;
+            qcom,mdss-dsi-lane-2-state;
+            qcom,mdss-dsi-lane-3-state;
+            qcom,mdss-dsi-bpp = <24>;
+
+becomes:
+
+	dsi->lanes = 4;
+	dsi->format = MIPI_DSI_FMT_RGB888;
+
 
 ## Translating Programming Sequences:
 
