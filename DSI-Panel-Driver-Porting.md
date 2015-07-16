@@ -170,3 +170,85 @@ TODO probably more flags to document..
 
 ## Translating Programming Sequences:
 
+The sequence of DSI messages to send is described in downstream kernel by the `-command` fields, for example the initialization sequence `somc,mdss-dsi-init-command`:
+
+                somc,mdss-dsi-init-command = [15 01 00 00 00 00 02 FF E0
+                                15 01 00 00 00 00 02 FB 01
+                                15 01 00 00 00 00 02 B5 86
+                                15 01 00 00 00 00 02 B6 77
+                                15 01 00 00 00 00 02 B8 AD
+                                15 01 00 00 00 00 02 FF 20
+                                15 01 00 00 00 00 02 FB 01
+                                15 01 00 00 00 00 02 10 04
+                                15 01 00 00 00 00 02 FF 24
+                                15 01 00 00 00 00 02 FB 01
+                                15 01 00 00 00 00 02 C6 00
+                                15 01 00 00 00 00 02 C5 32
+                                15 01 00 00 00 00 02 92 92
+                                15 01 00 00 00 00 02 FF 10
+                                15 01 00 00 00 00 02 35 00
+                                39 01 00 00 00 00 03 44 03 00
+                                39 01 00 00 00 00 04 3B 03 30 06
+                                15 01 00 00 01 00 02 BB 10
+                                05 01 00 00 1E 00 01 11];
+
+split out into table form to more easily see the different fields:
+
+	                             P
+	                             A
+	  D                          Y
+	  T  L        W      D       L
+	  Y  A     A  A      L       O
+	  P  S  V  C  I      E       A
+	  E  T  C  K  T      N       D
+	
+	  15 01 00 00 00   00 02   FF E0
+	  15 01 00 00 00   00 02   FB 01
+	  15 01 00 00 00   00 02   B5 86
+	  15 01 00 00 00   00 02   B6 77
+	  15 01 00 00 00   00 02   B8 AD
+	  15 01 00 00 00   00 02   FF 20
+	  15 01 00 00 00   00 02   FB 01
+	  15 01 00 00 00   00 02   10 04        ; MIPI_DCS_ENTER_SLEEP_MODE
+	  15 01 00 00 00   00 02   FF 24
+	  15 01 00 00 00   00 02   FB 01
+	  15 01 00 00 00   00 02   C6 00
+	  15 01 00 00 00   00 02   C5 32
+	  15 01 00 00 00   00 02   92 92
+	  15 01 00 00 00   00 02   FF 10
+	  15 01 00 00 00   00 02   35 00        ; MIPI_DCS_SET_TEAR_ON
+	  39 01 00 00 00   00 03   44 03 00     ; MIPI_DCS_SET_TEAR_SCANLINE
+	  39 01 00 00 00   00 04   3B 03 30 06
+	  15 01 00 00 01   00 02   BB 10
+	  05 01 00 00 1E   00 01   11           ; MIPI_DCS_EXIT_SLEEP_MODE
+
+Note that some messages have message id's defined by the MIPI-DSI spec (in comments above), others are panel specific.
+
+The above sequence becomes (with error handling omitted for brevity):
+
+	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+	ret = mipi_dsi_dcs_write(dsi, 0xff, (u8[]){ 0xe0 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xfb, (u8[]){ 0x01 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xb5, (u8[]){ 0x86 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xb6, (u8[]){ 0x77 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xb8, (u8[]){ 0xad }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xff, (u8[]){ 0x20 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xfb, (u8[]){ 0x01 }, 1);
+	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+	ret = mipi_dsi_dcs_write(dsi, 0xff, (u8[]){ 0x24 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xfb, (u8[]){ 0x01 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xc6, (u8[]){ 0x00 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xc5, (u8[]){ 0x32 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0x92, (u8[]){ 0x92 }, 1);
+	ret = mipi_dsi_dcs_write(dsi, 0xff, (u8[]){ 0x10 }, 1);
+	ret = mipi_dsi_dcs_set_tear_on(dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+	ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_SET_TEAR_SCANLINE,
+			(u8[]){ 0x03, 0x00 }, 2);
+	ret = mipi_dsi_dcs_write(dsi, 0x3b, (u8[]){ 0x03, 0x30, 0x06 }, 3);
+	ret = mipi_dsi_dcs_write(dsi, 0xbb, (u8[]){ 0x10 }, 1);
+	msleep(1);
+	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+	msleep(30);
+
+Note that we configure the dsi host for `MIPI_DSI_MODE_LPM` because `somc,mdss-dsi-init-command-state` is not `"dsi_hs_mode"`.  Also note that some messages have helper functions, like `mipi_dsi_dcs_enter_sleep_mode()`.
+
