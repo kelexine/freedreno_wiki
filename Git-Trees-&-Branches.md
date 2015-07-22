@@ -22,7 +22,7 @@ These are the configure flags I use (and the order to build things):
 
 **libdrm:**
 
-    ./autogen.sh --prefix=/usr --enable-freedreno-experimental-api
+    ./autogen.sh --prefix=/usr --enable-freedreno
 
 **mesa:**
 
