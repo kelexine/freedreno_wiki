@@ -26,7 +26,7 @@ These are the configure flags I use (and the order to build things):
 
 **mesa:**
 
-    ./autogen.sh --prefix=/usr --with-dri-drivers= --with-gallium-drivers=freedreno,swrast --with-egl-platforms=x11 --enable-gles2 --enable-gles1 --enable-debug --enable-gallium-egl --disable-gallium-llvm --enable-xa --disable-dri3
+    ./autogen.sh --prefix=/usr --with-dri-drivers= --with-gallium-drivers=freedreno,swrast --with-egl-platforms=x11 --enable-gles2 --enable-gles1 --enable-debug --disable-gallium-llvm --enable-xa --disable-dri3
 
 **xf86-video-freedreno:**
 
