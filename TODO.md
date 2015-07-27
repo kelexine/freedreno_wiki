@@ -21,7 +21,7 @@ Here is a list of things needed, in no particular order.
   * note non-unrollable loops (which are less common) still missing, but we advertise glsl 130 all the same
  * [x] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [x] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
- * [ ] transform feedback
+ * [x] transform feedback
  * [x] sRGB framebuffer support
  * [x] UBO's
  * [x] MRT (a3xx)
@@ -31,7 +31,7 @@ Here is a list of things needed, in no particular order.
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
  * [x] packed float (`PIPE_FORMAT_R11G11B10_FLOAT`)
  * [x] [EXT_texture_shared_exponent](http://developer.download.nvidia.com/opengl/specs/GL_EXT_texture_shared_exponent.txt) (`PIPE_FORMAT_R9G9B9E5_FLOAT`)
- * [ ] transform feedback
+ * [x] transform feedback
  * [ ] MSAA >= 4
  * [ ] 32b float depth (`PIPE_FORMAT_Z32_FLOAT` and `PIPE_FORMAT_Z32_FLOAT_S8X24_UINT`)
  * [ ] [NV_conditional_render](http://www.opengl.org/registry/specs/NV/conditional_render.txt) (`PIPE_CAP_CONDITIONAL_RENDER`)
