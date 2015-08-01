@@ -1,7 +1,11 @@
 Overview
 --------
 
-A4xx introduces geometry shader support. Unlike other GPU families, it doesn't have actual support for emitting multiple vertices, splitting primitives, etc. It functions by invoking the geometry shader multiple times until it executes a kill instruction, at which point that stage is considered to be over.
+A4xx introduces geometry shader support. As a brief reminder, an OpenGL geometry shader receives fully assembled primitives (up to 6 vertices for the adjacency variants), and outputs any number of primitives (including 0), with a limit of up to N vertices (implementation-dependent). The output primitives can be points, line strips, or triangle strips. Cutting a primitive will effectively restart it (using `EndPrimitive()`). The shader can supply any number of per-vertex varyings, as well as some per-primitive varyings like `gl_PrimitiveID`, `gl_Layer`, and `gl_ViewportIndex`.
+
+More advanced geometry shaders, available with [[ARB_gpu_shader5|https://www.opengl.org/registry/specs/ARB/gpu_shader5.txt]] and in part its ES cousin, [[OES_gpu_shader5|https://www.khronos.org/registry/gles/extensions/OES/OES_gpu_shader5.txt]] allow instancing, whereby a single geometry shader will have up to N parallel executions, differentiated with `gl_InvocationID`, as well as multi-stream transform feedback, whereby a particular vertex and its associated varyings are fed into one or another stream. Note that only stream 0 is passed on for rasterization, and this (multi-stream TF) can only be done with points primitives.
+
+Unlike other GPU families, A4xx doesn't have actual support for emitting multiple vertices, splitting primitives, etc from within the shader. It functions by invoking the geometry shader multiple times until it executes a kill instruction, at which point that "invocation" is considered to be over.
 
 Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so significant shenanigans have to occur in order to rewrite them efficiently. However an inefficient implementation might just count the number of emitted vertices, and run through all the code until the right one is hit.
 
