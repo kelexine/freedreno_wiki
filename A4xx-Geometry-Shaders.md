@@ -23,7 +23,7 @@ Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so sig
 Inputs
 ------
 * `r0.x` -- Presumably this is configurable via some register, but I've been unable to get the RA to assign it to anything else, so no idea which bitfield to look in. This value contains a bitfield:
-  * Bits 0:4 : ???
+  * Bits 0:4 : primitive offset in buffer
   * Bits 10:14 : `gl_InvocationID`
   * Bits 15:24 : The vertex whose outputs we are currently computing
 * `r0.y` -- `gl_PrimitiveIDIn`
@@ -33,7 +33,24 @@ Incoming vertex values are accessed using the `ldlw` instruction. The exact addr
     0005[62018003x_10309024x] mad.u24 r0.w, c9.x, (r)r0.w, c12.x
     0013[c286000bx_0480c001x] ldlw.u32 r2.w, l[r0.w], 4
 
-`c9.x` contains `0xc0`, `r0.w` is the bits 0:4 value, and `c12.x` is `0x80`. This particular example was reading all 4 components of the 3rd vertex's `gl_Position`. It appears that the vertices are 0x40 away from each other, but that is probably a function of the number of VS outputs.
+`c9.x` contains `0xc0`, `r0.w` is the bits 0:4 value, and `c12.x` is `0x80`. This particular example was reading all 4 components of the 3rd vertex's `gl_Position`.
+
+Vertex data is laid out in the space accessed by ldlw sequentially. A particular vertex attribute forms a group of the N vertices in the input primitive, and it appears that the baseline quantity is `0x40` for "no" attributes (i.e. just position and probably others). So the layout is as follows for triangle inputs:
+
+    0x00: V1 pos, V2 pos, V3 pos
+    ...
+    0xc0: V1 attr0, V2 attr0, V3 attr0
+    0xf0: V1 attr1, V2 attr1, V3 attr1
+    ...
+
+So as a result, in order to access a non-system attribute `N` in a primitive with `V` vertices for vertex `v`, you have to access it at `0x40 * V + N * 0x10 * V + v * 0x10`. System vertices are laid out in per-vertex groups as:
+
+    0x00: gl_Position
+    0x10: gl_PointSize, ???
+    0x20: ???
+    0x30: ???
+
+So the gl_Position of vertex `v` would be at `0x40 * v`, while the gl_PointSize would be at `0x40 * v + 0x10`. And of course the whole thing is offset by `r0.x & 31 * primitive stride`.
 
 Outputs
 -------
