@@ -7,7 +7,15 @@ More advanced geometry shaders, available with [[ARB_gpu_shader5|https://www.ope
 
 Unlike other GPU families, A4xx doesn't have actual support for emitting multiple vertices, splitting primitives, etc from within the shader. It functions by invoking the geometry shader multiple times until it executes a kill instruction, at which point that "invocation" is considered to be over.
 
-Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so significant shenanigans have to occur in order to rewrite them efficiently. However an inefficient implementation might just count the number of emitted vertices, and run through all the code until the right one is hit.
+Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so significant shenanigans have to occur in order to rewrite them efficiently. However an inefficient implementation might just count the number of emitted vertices, and run through all the code until the right one is hit. In other words, one might implement `EmitVertex()` like
+
+    int n = 0;
+    void EmitVertex() {
+       if (n == TheVertexForThisExecution)
+          exit();
+       else
+          n++;
+    }
 
 Inputs
 ------
