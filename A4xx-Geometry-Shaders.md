@@ -40,3 +40,5 @@ Outputs
 A single geometry shader runthrough only produces a single vertex's worth of data, so it works very much like vertex shaders do. In addition to the general data, it can also output `gl_PrimitiveID`, `gl_Layer`, and `gl_ViewportIndex` (???) values, the latter 2 select which renderbuffer layer and viewport settings are used.
 
 There is an output map for these, same as for VPC. In addition there are explicit registers specifying the position of the vertex as well as a primitive information register. This contains whether a new primitive should be started, the target layer, and probably viewport index. The layer starts at bit 7, the new primitive request value is 4. Speculation is the viewport index is at bit 3.
+
+It also appears that the point size goes into the register following the primitive info register.
