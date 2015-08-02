@@ -7,15 +7,18 @@ More advanced geometry shaders, available with [[ARB_gpu_shader5|https://www.ope
 
 Unlike other GPU families, A4xx doesn't have actual support for emitting multiple vertices, splitting primitives, etc from within the shader. It functions by invoking the geometry shader multiple times until it executes a kill instruction, at which point that "invocation" is considered to be over.
 
-Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so significant shenanigans have to occur in order to rewrite them efficiently. However an inefficient implementation might just count the number of emitted vertices, and run through all the code until the right one is hit. In other words, one might implement `EmitVertex()` like
+Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so significant shenanigans have to occur in order to rewrite them efficiently. However an inefficient implementation might just count the number of emitted vertices, and run through all the code until the right one is hit. In other words, one might implement `EmitVertex()` and `EndPrimitive()` like
 
     int n = 0;
+    int prim_info = 0;
     void EmitVertex() {
        if (n == TheVertexForThisExecution)
           exit();
        else
           n++;
+       prim_info = gl_Layer << 7;
     }
+    void EndPrimitive() { prim_info |= 4; }
 
 Inputs
 ------
@@ -36,4 +39,4 @@ Outputs
 -------
 A single geometry shader runthrough only produces a single vertex's worth of data, so it works very much like vertex shaders do. In addition to the general data, it can also output `gl_PrimitiveID`, `gl_Layer`, and `gl_ViewportIndex` (???) values, the latter 2 select which renderbuffer layer and viewport settings are used.
 
-TODO: How is the mapping done... VPC? Is there a GPC somewhere?
+There is an output map for these, same as for VPC. In addition there are explicit registers specifying the position of the vertex as well as a primitive information register. This contains whether a new primitive should be started, the target layer, and probably viewport index. The layer starts at bit 7, the new primitive request value is 4. Speculation is the viewport index is at bit 3.
