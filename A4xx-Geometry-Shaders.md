@@ -12,13 +12,13 @@ Sadly this doesn't map nicely onto how OpenGL expresses geometry shaders, so sig
     int n = 0;
     int prim_info = 0;
     void EmitVertex() {
+       prim_info |= gl_Layer << 7; // and maybe |= gl_ViewportIndex << 3
        if (n == TheVertexForThisExecution)
           exit();
-       else
-          n++;
-       prim_info = gl_Layer << 7;
+       n++;
+       prim_info = 0;
     }
-    void EndPrimitive() { prim_info |= 4; }
+    void EndPrimitive() { prim_info = 4; }
 
 Inputs
 ------
