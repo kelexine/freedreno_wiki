@@ -1,8 +1,8 @@
-# Inforce ifc6410
+# Inforce 6410 Plus
 
-Information about freedreno on the [ifc6410](http://inforcecomputing.com/blog/?p=27) pico-itx board.  See [[Fedora|Fedora]] for instructions on setting up setting up a fedora filesystem.
+Information about freedreno on the [Inforce 6410 Plus](http://www.inforcecomputing.com/products/single-board-computers/6410-plus-single-board-computer-sbc) pico-itx board.  See [[Fedora|Fedora]] for instructions on setting up setting up a fedora filesystem.
 
-NOTE: the below prebuilt kernel below is a bit old, and not getting updated.  It is recommended to see the linaro [kernel branch](https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/shortlog/refs/heads/freedreno/ifc6410-v2.0-drm) and [ifc6410 page](https://wiki.linaro.org/Boards/IFC6410).
+NOTE: the below prebuilt kernel below is a bit old, and not getting updated.  It is recommended to see the linaro [kernel branch](https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/shortlog/refs/heads/freedreno/ifc6410-v2.0-drm) and [Inforce 6410 Plus page](https://wiki.linaro.org/Boards/IFC6410).
 
  * prebuilt kernel: [ifc6410-boot-f20.img](http://people.freedesktop.org/~robclark/f20/ifc6410-boot-f20.img)
  * kernel-msm branch: [ifc6410-drm](https://github.com/freedreno/kernel-msm/commits/ifc6410-drm)
@@ -12,7 +12,7 @@ NOTE: the below prebuilt kernel below is a bit old, and not getting updated.  It
 
 1. if android still running: `sudo adb reboot-bootloader`
 2. once board is booted to fastboot, if you want to prevent android from booting automatically: `sudo fastboot erase boot`
-  * alternatively, see [forcing ifc6410 into fastboot](http://mydragonboard.org/2013/forcing-ifc6410-into-fastboot/)
+  * alternatively, see [forcing Inforce 6410 Plus into fastboot](http://mydragonboard.org/2013/forcing-ifc6410-into-fastboot/)
 3. boot linux: `sudo fastboot boot ifc6410-boot-f20.img`
 
 note that you can override the kernel commandline with fastboot, for example to boot with filesystem on sd-card:
