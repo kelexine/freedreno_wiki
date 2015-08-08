@@ -24,8 +24,7 @@ Here is a list of things needed, in no particular order.
  * [x] transform feedback
  * [x] sRGB framebuffer support
  * [x] UBO's
- * [x] MRT (a3xx)
- * [ ] MRT (a4xx)
+ * [x] MRT
 * gl3 support:
  * [x] GLSL version level 130 (integer support and ??)
  * [ ] texture compression (`PIPE_FORMAT_RGTC{1,2}_{U,S}NORM`)
