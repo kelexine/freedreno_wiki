@@ -40,8 +40,8 @@ Any distro which has a relatively recent mesa, and which packages [xf86-video-fr
   * [[Nexus 4|Nexus-4]] (a3xx)
   * [[Nexus 7 Flo|Nexus-7-Flo]] (a3xx)
 * ARM boards:
-  * [[ifc6410|Ifc6410]] (a3xx)
-  * [[ifc6540|Ifc6540]] (a4xx)
+  * [[ifc6410|Inforce-6410-Plus]] (a3xx)
+  * [[ifc6540|Inforce-6540]] (a4xx)
   * [[bSTem|bStem]] (a3xx)
   * [[apq8074 dragonboard|apq8074dragonboard]] (a3xx)
 
