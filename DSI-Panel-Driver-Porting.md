@@ -123,6 +123,8 @@ DSI panels tend to support a single fixed resolution, described by `struct drm_d
 	vsync_end = vsync_start + vsw;
 	vtotal = vsync_end + vbp;
 
+        clock = htotal * vtotal * frame_rate / 1000;
+
 So:
 
 	qcom,mdss-dsi-panel-framerate = <60>;
