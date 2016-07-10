@@ -10,10 +10,10 @@ Each patch is then fed into a hardware tessellation unit. Additionally, the tess
 In order to trigger a draw with tessellation, the draw packet's `TESS_MODE` needs to be set to `0xc` for quads, `0xd` for triangles, and `0xe` for isolines. The `PRIM_TYPE` should be `0x1f + PATCH_VERTICES` (so for the default `PATCH_VERTICES = 3`, we would use `0x22`). Additionally the `PC_HS_PARAM` register contains settings for the number of output vertices from HS, as well as tessellator parameters (spacing, connectivity, faceness). These are derived from both hull and domain shader properties.
 
 ```
-        PC_HS_PARAM: { VERTICES_OUT = 32 | SPACING = EVEN_SPACING | CW | CONNECTED }
+PC_HS_PARAM: { VERTICES_OUT = 32 | SPACING = EVEN_SPACING | CW | CONNECTED }
 ```
 
-Note that for isolines, CW actually represents the CONNECTED setting. (Similarly to NVIDIA hw, curiously enough.)
+Note that for isolines, `CW` actually represents the `CONNECTED` setting. (Similarly to NVIDIA hw, curiously enough.)
 
 Tessellation Control Shaders
 ----------------------------
