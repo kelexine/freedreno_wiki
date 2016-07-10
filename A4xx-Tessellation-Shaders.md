@@ -15,8 +15,17 @@ PC_HS_PARAM: { VERTICES_OUT = 32 | SPACING = EVEN_SPACING | CW | CONNECTED }
 
 Note that for isolines, `CW` actually represents the `CONNECTED` setting. (Similarly to NVIDIA hw, curiously enough.)
 
+The tessellator will expect tessellation parameters packed in at `PC_TESSFACTOR_ADDR`, with each factor group taking up 12, 20, 28 bytes for isolines, triangles, and quads respectively. The first 4 bytes should be the primitive ID (but only set conditionally based on a const, which means that it's only needed ... when? maybe when gs/fs consume it?). The next bytes are the outer factors, followed by the inner factors. For isolines, that's just 2 outer factors, for triangles it's 3 outer factors followed by 1 inner factor, and quads have all 6.
+
 Tessellation Control Shaders
 ----------------------------
+
+### Inputs
+Presumably the specific regid's are configurable via some register, but I've been unable to get the RA to assign it to anything else, so no idea which bitfield to look in.
+* `r0.x` --  This value contains a bitfield:
+  * Bits 10:14 : `gl_InvocationID`
+* `r0.y` -- `gl_PrimitiveID`
+* `r0.z` -- primitive number in patch "buffer". Used to compute the offset in the tessfactor patch outputs, as well as regular patch outputs.
 
 ```
 opcode: CP_LOAD_STATE (30) (3 dwords)
@@ -32,4 +41,24 @@ Tessellation Evaluation Shaders
 opcode: CP_LOAD_STATE (30) (3 dwords)
         { DST_OFF = 0 | STATE_SRC = SS_INVALID_ALL_IC | STATE_BLOCK = SB_GEOM_SHADER | NUM_UNIT = 1 }
         { STATE_TYPE = ST_SHADER | EXT_SRC_ADDR = 0xc00ea000 }
+```
+
+
+Notes:
+
+These are likely related to HS register inputs or ... something:
+
+```
+t0                      write 0x230c
+                                0x230c: 00010000
+c00812e4:                       0000230c 00010000
+t0                      write 0x2318
+                                0x2318: 00200c00
+c00812ec:                       00002318 00200c00
+t0                      write 0x2319
+                                0x2319: 02000000
+c00812f4:                       00002319 02000000
+t0                      write 0x2340
+                                0x2340: 00000000
+c00812fc:                       00002340 00000000
 ```
