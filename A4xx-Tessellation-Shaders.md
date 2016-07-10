@@ -23,9 +23,12 @@ Tessellation Control Shaders
 ### Inputs
 Presumably the specific regid's are configurable via some register, but I've been unable to get the RA to assign it to anything else, so no idea which bitfield to look in.
 * `r0.x` --  This value contains a bitfield:
+  * Bits 0:4 : primitive offset in buffer
   * Bits 10:14 : `gl_InvocationID`
 * `r0.y` -- `gl_PrimitiveID`
 * `r0.z` -- primitive number in patch "buffer". Used to compute the offset in the tessfactor patch outputs, as well as regular patch outputs.
+
+See [[A4xx Geometry Shaders]] for how inputs are read in with `ldlw`. The same logic follows here. The input primitive size is based on `gl_PatchVerticesIn`, which comes in via a driver-supplied const.
 
 ### Outputs
 There are no regid-based outputs from a hull shader. It writes all of its data into gmem. In order to interact with the other hull shaders, it first stages all of its outputs (including per-vertex) outputs into "private" memory, accessible via `stp` and `ldp`, and then invocation 0 writes all of them out into global memory. The layout of the tess factors is fixed since the hardware has to read it in, but the regular patch outputs and per-vertex outputs are free-form and up to the driver -- just have to match to what the domain shader expects to read in.
