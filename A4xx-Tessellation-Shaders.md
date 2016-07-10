@@ -40,6 +40,8 @@ where c14.x contains the stride as outlined above, and c9.x contains the tessfac
 
 [Question: How big does the patch buffer need to get? Does it have to be big enough for the whole draw? Or only up to N patches at a time? Hopefully the latter.]
 
+A barrier is simply implemented as a (ss) flag on the next instruction, which forces all loads/stores to complete.
+
 ```
 opcode: CP_LOAD_STATE (30) (3 dwords)
         { DST_OFF = 0 | STATE_SRC = SS_INDIRECT_STM | STATE_BLOCK = SB_VERT_SHADER | NUM_UNIT = 5 }
