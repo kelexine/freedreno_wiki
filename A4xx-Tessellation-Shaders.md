@@ -27,6 +27,19 @@ Presumably the specific regid's are configurable via some register, but I've bee
 * `r0.y` -- `gl_PrimitiveID`
 * `r0.z` -- primitive number in patch "buffer". Used to compute the offset in the tessfactor patch outputs, as well as regular patch outputs.
 
+### Outputs
+There are no regid-based outputs from a hull shader. It writes all of its data into gmem. In order to interact with the other hull shaders, it first stages all of its outputs (including per-vertex) outputs into "private" memory, accessible via `stp` and `ldp`, and then invocation 0 writes all of them out into global memory. The layout of the tess factors is fixed since the hardware has to read it in, but the regular patch outputs and per-vertex outputs are free-form and up to the driver -- just have to match to what the domain shader expects to read in.
+
+The address where factors should be written is determined with
+
+```
+0005[62010007x_10241038x] mad.u24 r1.w, c14.x, r0.z, c9.x
+```
+
+where c14.x contains the stride as outlined above, and c9.x contains the tessfactor base address. Unfortunately since the stride differs by tessellation mode, it also means that the output code has to be customized. Either it needs to predicate based on the stride, or it needs to just be different based on the mode.
+
+[Question: How big does the patch buffer need to get? Does it have to be big enough for the whole draw? Or only up to N patches at a time? Hopefully the latter.]
+
 ```
 opcode: CP_LOAD_STATE (30) (3 dwords)
         { DST_OFF = 0 | STATE_SRC = SS_INDIRECT_STM | STATE_BLOCK = SB_VERT_SHADER | NUM_UNIT = 5 }
