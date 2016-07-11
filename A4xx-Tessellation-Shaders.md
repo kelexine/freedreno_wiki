@@ -41,7 +41,7 @@ The address where factors should be written is determined with
 
 where c14.x contains the stride as outlined above, and c9.x contains the tessfactor base address. Unfortunately since the stride differs by tessellation mode, it also means that the output code has to be customized. Either it needs to predicate based on the stride, or it needs to just be different based on the mode.
 
-[Question: How big does the patch buffer need to get? Does it have to be big enough for the whole draw? Or only up to N patches at a time? Hopefully the latter.]
+_Question: How big does the patch buffer need to get? Does it have to be big enough for the whole draw? Or only up to N patches at a time? Hopefully the latter._
 
 A barrier is simply implemented as a (ss) flag on the next instruction, which forces all loads/stores to complete.
 
@@ -54,6 +54,24 @@ opcode: CP_LOAD_STATE (30) (3 dwords)
 
 Tessellation Evaluation Shaders
 -------------------------------
+
+### Inputs
+Presumably the specific regid's are configurable via some register, but I've been unable to get the RA to assign it to anything else, so no idea which bitfield to look in.
+* `r0.x` --  ?
+* `r0.y` -- `gl_PrimitiveID`
+* `r0.z` -- primitive number in patch "buffer". This matches up to the value used in the hull shader, and can be used to retrieve either tessfactors or patch/vertex values stored by the hull shader.
+
+The `gl_TessCoord.xy` values are supplied via
+```
+VFD_CONTROL_3: { REGID_VTXCNT = r63.x | REGID_TESSX = r0.w | REGID_TESSY = r1.x }
+```
+and the `.z` value is computed as `1 - x - y` for triangle domains (these are barycentric coordinates), 0 otherwise.
+
+The remaining inputs, which are written by the hull shader, are read out of global memory with `ldg`, using the `r0.z` value + patch stride to index into a shared global buffer.
+
+### Outputs
+
+Tessellation evaluation outputs are handled the same way as vertex shader outputs, with `SP_DS_PARAM_REG` and `SP_DS_OUT[].REG` specifying the outputs.
 
 ```
 opcode: CP_LOAD_STATE (30) (3 dwords)
