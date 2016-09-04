@@ -24,7 +24,7 @@ Arch boot.img can be found here [[build-initramfs-mkinitcpio|https://github.com/
   * nvidia-trimslice etc
 
 ### Graphics
-* xf86-video-freedreno can be found at [[xf86-video-freedreno-git|https://aur.archlinux.org/packages/xf86-video-freedreno-git/]]
+* xf86-video-freedreno can be found at [[xf86-video-freedreno-git|https://github.com/aur-archive/xf86-video-freedreno-git]]
 * libdrm and be installed via pacman -S libdrm
 * Mesa will need to be built. A PKGBUILD can be found here
 [[PKGBUILD|https://github.com/crondog/arch-flo/blob/master/PKGBUILD.mesa]] (I would
