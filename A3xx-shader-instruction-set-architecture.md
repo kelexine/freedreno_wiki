@@ -1,5 +1,7 @@
 Note: see [instr-a3xx.h](https://github.com/freedreno/freedreno/blob/master/includes/instr-a3xx.h) for all the known instruction opcodes and encodings.
 
+Note: this page applies to a4xx and a5xx with some very minor differences.  In the mesa code, the instruction set and shader compiler for a3xx/a4xx/a5xx (and beyond?) is referred to as "ir3".
+
 ## Instruction Set Architecture (ISA) Overview
 Unlike the [[a2xx shader ISA|A2XX-Shader-Instruction-Set-Architecture]], the a3xx uses a "simple" scalar instruction set, but with some tricks.  And the compiler needs to be a bit more aware about scheduling and some other constraints.
 
