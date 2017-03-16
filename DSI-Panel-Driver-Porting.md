@@ -111,16 +111,16 @@ The upstream kernel, by comparison, has the common panel framework (see `drivers
 
 ## Translating Mode Timings
 
-DSI panels tend to support a single fixed resolution, described by `struct drm_display_mode`.  There are two common ways to represent the timings: `hdisplay`/`hsync_start`/`hsync_end`/`htotal` and `vdisplay`/`vsync_start`/`vsync_end`/`vtotal` (which drm uses), versus `width`/`h-front-porch`/`h-back-porch`/`h-sync-width` and `height`/`v-front-porch`/`v-back-porch`/`v-sync-width` (which downstream kernel uses).  Fortunately it is quite easy to convert between the two:
+DSI panels tend to support a single fixed resolution, described by `struct drm_display_mode`.  There are two common ways to represent the timings: `hdisplay`/`hsync_start`/`hsync_end`/`htotal` and `vdisplay`/`vsync_start`/`vsync_end`/`vtotal` (which drm uses), versus `width`/`h-front-porch`/`h-back-porch`/`h-pulse-width` and `height`/`v-front-porch`/`v-back-porch`/`v-pulse-width` (which downstream kernel uses).  Fortunately it is quite easy to convert between the two:
 
 	hdisplay = width
 	hsync_start = hdisplay + hfp;
-	hsync_end = hsync_start + hsw;
+	hsync_end = hsync_start + hpw;
 	htotal = hsync_end + hbp;
 
 	vdisplay = y_res;
 	vsync_start = vdisplay + vfp;
-	vsync_end = vsync_start + vsw;
+	vsync_end = vsync_start + vpw;
 	vtotal = vsync_end + vbp;
 
 	clock = htotal * vtotal * frame_rate / 1000;
