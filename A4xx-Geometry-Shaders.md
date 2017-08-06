@@ -62,7 +62,7 @@ It also appears that the point size goes into the register following the primiti
 
 Optimization
 ------------
-By using the `EmitVertex` implementation as above, each shader will execute `O(n^2)` times. This may be undesirable. However if the computation for data of vertex n+1 does not depend on the computation for data of vertex n, it should be possible to rewrite the shader with a `switch` statement. For example a shader that looks like
+By using the `EmitVertex` implementation as above, each primitive will execute `O(vertices * instructions)` instructions, since each incremental vertex will have to run through the instructions for all previous vertices. This may be undesirable. However if the computation for data of vertex n+1 does not depend on the computation for data of vertex n, it should be possible to rewrite the shader with a `switch` statement. For example a shader that looks like
 
     for (int i = 0; i < 3; i++) {
       gl_out[i].gl_Position = gl_in[i].gl_Position;
