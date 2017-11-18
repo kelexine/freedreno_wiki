@@ -249,6 +249,7 @@ split out into table form to more easily see the different fields:
 	  05 01 00 00 1E   00 01   11           ; MIPI_DCS_EXIT_SLEEP_MODE
 
 Note that some messages have message id's defined by the MIPI-DSI spec (in comments above), others are panel specific.
+Here is a list of what function a dtype hex is: http://elixir.free-electrons.com/linux/latest/source/include/video/mipi_display.h#L17
 
 The above sequence becomes (with error handling omitted for brevity):
 
