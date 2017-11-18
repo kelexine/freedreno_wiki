@@ -29,9 +29,12 @@ Any distro which has a relatively recent mesa, and which packages [xf86-video-fr
   * status: mesa 10.2.1 and freedreno ddx
   * [release-notes](http://releases.linaro.org/14.06/ubuntu/ifc6410)
   * [instructions](https://wiki.linaro.org/Boards/IFC6410)
-
 * Gentoo
 * [[Arch|Arch]]
+* [postmarketOS](https://postmarketos.org) (Alpine Linux based)
+  * status: mesa 17.2.4 and freedreno ddx (see current version [here](https://pkgs.alpinelinux.org/packages?name=mesa-dri-freedreno))
+  * [asus-flo](https://wiki.postmarketos.org/wiki/Google_Nexus_7_2013_(asus-flo)) and [sony-castor](https://wiki.postmarketos.org/wiki/Sony_Xperia_Z2_Tablet_(sony-castor-windy)) have at least limited freedreno support
+  * see also: [devices](https://wiki.postmarketos.org/wiki/Devices), [porting guide](https://wiki.postmarketos.org/wiki/Porting_to_a_new_device), [freedreno related wiki content](https://wiki.postmarketos.org/index.php?search=freedreno)
 
 ### Devices: 
 * Phones/Tablets:
