@@ -7,7 +7,8 @@ You might find some helpful pointers about mainlining the device [here](https://
 ### 3.4 backport
 There's a backport from 2013 of the freedreno to a 3.4 kernel in the [kernel-msm](https://github.com/freedreno/kernel-msm) repository, with two branches.
 * [mako-kernel](https://github.com/freedreno/kernel-msm/tree/mako-kernel)
-  * This one compiles, but the display doesn't work with it yet.
+  * This one compiles.
+  * The display is only "working" by using qcom's customized fbdev driver according to robclark, so it is a bit non-standard. 
   * Notably the USB networking was disabled in the kernel config (in favor for serial debugging?), but it should be possible to activate it again.
   * [package build recipe with GCC6 patches](https://github.com/ollieparanoid/pmbootstrap/tree/beb8b0a4ec65d68681eebe9ab5c5223842716cf8/aports/device/linux-lg-mako)
 * [mako-kernel-drm](https://github.com/freedreno/kernel-msm/tree/mako-kernel-drm)
