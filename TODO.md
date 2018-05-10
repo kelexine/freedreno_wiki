@@ -1,3 +1,5 @@
+For something a bit more current, see the trello page: https://trello.com/b/VC0IXzrq/freedreno
+
 Here is a list of things needed, in no particular order.
 
 ### gallium:
