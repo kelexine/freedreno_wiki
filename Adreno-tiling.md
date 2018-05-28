@@ -10,9 +10,8 @@ Adreno, on the other hand, has a (relatively) large in-core (GMEM) or on-chip (O
 
 The naive approach is to build up cmds to setup state and perform clears/draws ignoring tiling.  And then in the top-level cmdstream buffer (what is submitted to the kernel), do the (optional) resolve, per-tile setup, IB (branch) to the clear/draw commands, and then resolve:
 
-<center>
 ![adreno binning](http://freedreno.github.io/images/adreno-binning.png)
-</center>
+
 * Rendering within each tile works like traditional IMR
 * The per-tile commands:
   * restore - optional transfer contents from system memory to tile buffer
