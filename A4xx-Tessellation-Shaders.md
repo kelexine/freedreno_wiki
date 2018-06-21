@@ -31,7 +31,7 @@ Presumably the specific regid's are configurable via some register, but I've bee
 See [[A4xx Geometry Shaders]] for how inputs are read in with `ldlw`. The same logic follows here. The input primitive size is based on `gl_PatchVerticesIn`, which comes in via a driver-supplied const.
 
 ### Outputs
-There are no regid-based outputs from a hull shader. It writes all of its data into gmem. In order to interact with the other hull shaders, it first stages all of its outputs (including per-vertex) outputs into "private" memory, accessible via `stp` and `ldp`, and then invocation 0 writes all of them out into global memory. The layout of the tess factors is fixed since the hardware has to read it in, but the regular patch outputs and per-vertex outputs are free-form and up to the driver -- just have to match to what the domain shader expects to read in.
+There are no regid-based outputs from a hull shader. It writes all of its data into global memory. In order to interact with the other hull shaders, it first stages all of its outputs (including per-vertex) outputs into "private" memory, accessible via `stp` and `ldp`, and then invocation 0 writes all of them out into global memory. The layout of the tess factors is fixed since the hardware has to read it in, but the regular patch outputs and per-vertex outputs are free-form and up to the driver -- just have to match to what the domain shader expects to read in.
 
 The address where factors should be written is determined with
 
