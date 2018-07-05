@@ -29,7 +29,9 @@ This tree contains host side tools, as well as the rnndb register databases.
 
 ## Capturing cmdstream traces
 
-The cmdstream from the userspace driver is captured into an .rd file, which is a simple binary file consisting of arbitrary number of sections, where each section has a type, length, and value.  The first level cmdstream buffer is captured, and known/important gpu buffers are snapshot'd along with their gpu address.  (cffdump needs this to follow IB's and other pointers in the cmdstream.)
+The cmdstream from the userspace driver is captured into an `.rd` file, which is a simple binary file consisting of arbitrary number of sections, where each section has a type, length, and value.  The first level cmdstream buffer is captured, and known/important gpu buffers are snapshot'd along with their gpu address.  (cffdump needs this to follow IB's and other pointers in the cmdstream.)
+
+Note that cmdstream traces compress well, and `cffdump`/etc can read `.rd.gz` files.
 
 ### downstream kgsl kernel driver:
 
@@ -50,6 +52,7 @@ For msm drm/kms driver you can simply use:
 ```
 The moduleparam `msm.rd_full=1` will capture not just the cmdstream buffers but also ancillary buffers.  This is useful if, for example, you want to see the shaders (which are normally emitted as pointers in the cmdstream to other buffers).
 
+Newer kernels also have a `hangrd` file in debugfs to capture cmdstream from only submits which cause GPU hangs, which is useful when (for example) debugging games that trigger GPU crashes.
 
 ## Tools
 ### cffdump
