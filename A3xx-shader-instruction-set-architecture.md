@@ -49,6 +49,7 @@ Generally texture sample related instructions:
 * `sam (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
 * `isam (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
 * `samgq (f32)(xyzw)Rdst, Rsrc0, Rsrc1, s#0, t#0`
+* `isam (f32)(xyzw)Rdst, Rsrc0, Rsrc1, Rsrc2`
 
 These are the only instructions that write to and read from more than one scalar register.  In particular they write to up to four (as controlled by writemask) successive scalar registers.
 
@@ -66,6 +67,8 @@ The `isam` variant expects integer coordinates, while the `sam` variant expects 
 `Rsrc0` points to the first register of the sequence: x, y, (`.3d`?) z, (`.s`?) shadow, (`.a`?) array, (`.p`?) projector, and for `samgq`, starting at offset 4 (i.e. padding if not enough flags to force it), dpdx.xy, dpdy.xy
 
 `Rsrc1` points to the first register of the sequence: (`.o`?) offset.xy, (`.3d.o`?) offset.z, (`.l`?) lod, (`.b`?) bias. Note that if not using a `sam.l` or `sam.b` variant, and offset isn't set, `Rsrc1` is omitted entirely.
+
+`Rsrc2` points to the first register of the sequence: texture#, (untested) sampler#. s2en bit enables Rsrc2.
 
 Other non-cat5 instructions which read from a register written by a cat5 instruction must have the `(sy)` bit set to sync with the texture-fetch pipeline.
 
