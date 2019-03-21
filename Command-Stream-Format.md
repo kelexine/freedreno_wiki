@@ -37,4 +37,4 @@ A few common actions are:
 * `CP_INDIRECT_BUFFER:0x3f` - branch to a 2nd cmdstream buffer
 * `CP_DRAW_INDX:0x22` - trigger drawing
 
-Currently the best reference is [util/cffdump.c](https://github.com/freedreno/freedreno/blob/master/util/cffdump.c), the commandstream parser, and [fdre-a2xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a2xx/freedreno.c) or [fdre-a3xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a3xx/freedreno.c).  Also see the [renders](http://freedreno.github.com/renders/index.html) page which has example renders and corresponding cmdstream parses from fdre.
+Currently the best reference is [util/cffdump.c](https://github.com/freedreno/envytools/blob/master/cffdump/cffdump.c), the commandstream parser, and [fdre-a2xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a2xx/freedreno.c) or [fdre-a3xx/freedreno.c](https://github.com/freedreno/freedreno/blob/master/fdre-a3xx/freedreno.c).  Also see the [renders](http://freedreno.github.com/renders/index.html) page which has example renders and corresponding cmdstream parses from fdre.
