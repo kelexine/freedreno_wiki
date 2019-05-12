@@ -176,7 +176,7 @@ The upstream kernel has a number of `mode_flags` to configure the behaviour of t
    * no flag needed for `dsi_cmd_mode`
  * `qcom,mdss-dsi-h-sync-pulse = <1>` -> `MIPI_DSI_MODE_VIDEO_HSE`
  * not having `qcom,mdss-dsi-tx-eot-append` -> `MIPI_DSI_MODE_EOT_PACKET` (note upstream flag disables, while downstream dts entry enables)
- * If panel uses both high-speed and low-power mode, set `MIPI_DSI_CLOCK_NON_CONTINUOUS`.  Check the `-command-state` fields for `dsi_lp_mode` and `dsi_hs_mode`.  If you see both, then set `MIPI_DSI_CLOCK_NON_CONTINUOUS` since we are switching dynamically between different speeds.
+ * If panel uses both high-speed and low-power mode, set `MIPI_DSI_CLOCK_NON_CONTINUOUS`.  Check the `-command-state` fields for `dsi_lp_mode` and `dsi_hs_mode`.  If you see both, then set `MIPI_DSI_CLOCK_NON_CONTINUOUS` since we are switching dynamically between different speeds. There's a catch though - another field (`dsi-force-clk-lane-hs`) exists, which indicates that only high-speed mode is used. The issue is, some downstream kernels may use both of these fields, and even set them different to one another. In that case, dsi-force-clk-lane-hs takes precedence, and you can safely ignore the `-command-state` fields.
 
 TODO probably more flags to document..
 
