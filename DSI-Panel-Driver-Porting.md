@@ -109,6 +109,10 @@ Rather than having per-panel drivers that are decipherable, the downstream kerne
 
 The upstream kernel, by comparison, has the common panel framework (see `drivers/gpu/drm/panel`).  The common panel framework allows for panel drivers to be written once, and shared between different SoC's, so it uses drm's `struct mipi_dsi_device` to abstract away the display driver implementation.  For simple panels that don't require custom programming sequences there is `panel-simple.c`, but that is unlikely to be applicable for the DSI panel in any phone/tablet.  Instead, for panels requiring custom programming sequences, a new panel driver is written.  For this document, I will use the example of the `panel-auo-novatek-1080p-vid.c` driver that I am writing for the AUO panel in my xperia z3.  (Note that sony multi-sources their panel drivers so not all z3's use the AUO panel.)
 
+## linux-mdss-dsi-panel-driver-generator
+[linux-mdss-dsi-panel-driver-generator] is a code generator that takes the downstream device tree as input,
+and automatically produces clean Linux DRM panel drivers for each of the included panels. It was built based on the documentation below, so give it a try and use it as a base if you want to save some time. ;)
+
 ## Translating Mode Timings
 
 DSI panels tend to support a single fixed resolution, described by `struct drm_display_mode`.  There are two common ways to represent the timings: `hdisplay`/`hsync_start`/`hsync_end`/`htotal` and `vdisplay`/`vsync_start`/`vsync_end`/`vtotal` (which drm uses), versus `width`/`h-front-porch`/`h-back-porch`/`h-pulse-width` and `height`/`v-front-porch`/`v-back-porch`/`v-pulse-width` (which downstream kernel uses).  Fortunately it is quite easy to convert between the two:
@@ -279,3 +283,4 @@ The above sequence becomes (with error handling omitted for brevity):
 
 Note that we configure the dsi host for `MIPI_DSI_MODE_LPM` because `somc,mdss-dsi-init-command-state` is not `"dsi_hs_mode"`.  Also note that some messages have helper functions, like `mipi_dsi_dcs_enter_sleep_mode()`.
 
+[linux-mdss-dsi-panel-driver-generator]: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
