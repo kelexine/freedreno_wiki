@@ -48,7 +48,7 @@ Or, the actual bytes in memory:
 
 `f9 62 80 00`
 
-Despite the fact that primitive streams take a non-aligned number of bits, each stream must start on a DWORD-aligned offset. Thus there may be some padding between primitive streams for different draws, as in the example above.
+Despite the fact that primitive streams take a non-aligned number of bits, each stream must start on a DWORD-aligned offset. Thus there may be some padding between primitive streams for different draws, as in the example above. This also corresponds to the fact that the sizes reported by the VSC are always a multiple of 4.
 
 ### Draw streams
 
@@ -62,8 +62,4 @@ In summary, each draw stream packet contains the following:
 - If bitfield is empty, the number of draws it is empty for, otherwise the size of the draw stream in DWORD's.
 - Checksum
 
-If there are `N` bins, the final packet, after all the draws are done, consists of a 1 followed by `N + 17` 0's, plus a final 1. This uses the otherwise-unused pattern of a non-empty bitfield (initial 1) that is nontheless empty (has all 0's), and then a number that is `2**17`. Any final skip packets are subsumed into this packet.
-
-## Padding
-
-TODO: figure out what padding is necessary in terms of `VSC_DATA(2)_SIZE` and describe it here. There seems to be some.
+If there are `N` bins, the final packet, after all the draws are done, consists of a 1 followed by `N + 17` 0's, plus a final 1. This uses the otherwise-unused pattern of a non-empty bitfield (initial 1) that is nontheless empty (has all 0's). This is the entirety of the final packet, according to the sizes reported through `VSC_SIZE_ADDRESS`, i.e. the normal 17-bit number and checksum that would normally be there don't exist. Note that the size reported by the VSC is always a multiple of 4, i.e. it's rounded up to a DWORD boundary.
